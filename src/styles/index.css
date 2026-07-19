@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Brand/Theme color scale - Charcoal & Champagne */
+  --color-bg-primary: #141414;
+  --color-bg-secondary: #1C1C1C;
+  --color-card-bg: #1C1C1C;
+  --color-card-hover: #262626;
+  --color-border-primary: #2E2E2E;
+  
+  /* Schematic signature accents */
+  --color-signature: #C9A66B;
+  --color-grid: #1F1F1F;
+  --shadow-glow-accent: 0 0 15px rgba(201, 166, 107, 0.25);
+  --shadow-glow-hover: 0 0 20px rgba(201, 166, 107, 0.35);
+  
+  /* Text color scale */
+  --color-text-primary: #F0EEE6;
+  --color-text-secondary: #A8A49A;
+  --color-text-muted: #8A867C;
+  
+  /* Signal-color set mapped to HTTP status semantics */
+  --color-status-success: #3BA07C;    /* 2xx OK - adjusted for contrast */
+  --color-status-info: #C9A66B;       /* 1xx / 3xx Metadata - champagne accent */
+  --color-status-warning: #C57E35;    /* Warning / Slow / Outage - adjusted for contrast and distinguishability */
+  --color-status-mutation: #B0A295;   /* Mutation / POST/PUT - adjusted for contrast */
+  --color-status-async: #9E8CBF;      /* Purple for Messaging Queue - adjusted for contrast */
+  --color-status-error: #E05B5B;      /* 5xx Error - adjusted for contrast */
+  
+  /* Fonts */
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code, pre {
+    font-family: var(--font-mono);
+  }
+
+  /* Custom global scrollbars for WebKit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-primary);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-signature);
+  }
+
+  /* Standard scrollbars for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-primary) var(--color-bg-primary);
+  }
+}
+
+@utility bg-blueprint-grid {
+  background-image: 
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+}

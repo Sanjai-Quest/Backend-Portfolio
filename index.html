@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Font preconnect (eliminates render-blocking DNS + TLS handshake) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Default title and meta description (overridden per-route via react-helmet-async) -->
+    <title>Sanjai L — Backend Engineer Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio of Sanjai L — backend engineer specialising in distributed systems, event-driven architecture, microservices and system design. Projects: PlanWizz, DevSecWatch, TriNetra AI, DunesDay."
+    />
+
+    <!-- Open Graph fallback (overridden per-route) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sanjai L — Backend Runtime" />
+    <meta property="og:title" content="Sanjai L — Backend Engineer Portfolio" />
+    <meta
+      property="og:description"
+      content="Portfolio of Sanjai L — backend engineer specialising in distributed systems, event-driven architecture and microservices."
+    />
+
+    <!-- Theme colour for browser chrome -->
+    <meta name="theme-color" content="#0B0F1A" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>
