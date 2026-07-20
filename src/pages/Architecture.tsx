@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { ReactFlow, Background } from "@xyflow/react";
+import { ReactFlow, Background, ReactFlowProvider, useReactFlow, type Node, type Edge } from "@xyflow/react";
 import { useReducedMotion } from "framer-motion";
 import { Database, Server, Send, Layers, AlertTriangle } from "lucide-react";
 
@@ -29,6 +29,111 @@ const nodeTypes = {
 };
 
 type TopologyType = "RUNTIME" | "PLANWIZZ" | "DEVSECWATCH" | "TRINETRA" | "DUNESDAY";
+
+interface CustomTopologyNode {
+  id: string;
+  data: {
+    label: string;
+    subtitle?: string;
+    status?: string;
+    details?: {
+      whatIs: string;
+      whatFor: string;
+    };
+  };
+}
+
+const TopologyMapPanel: React.FC<{
+  activeTab: TopologyType;
+  activeNodes: Node[];
+  activeEdges: Edge[];
+}> = ({ activeTab, activeNodes, activeEdges }) => {
+  const { setNodes } = useReactFlow();
+  const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
+
+  // Clear selection on tab switch
+  useEffect(() => {
+    setSelectedNode(null);
+  }, [activeTab]);
+
+  return (
+    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
+        TRINETRA:    "h-[680px]",
+        RUNTIME:     "h-[440px]",
+        DEVSECWATCH: "h-[440px]",
+        PLANWIZZ:    "h-[360px]",
+        DUNESDAY:    "h-[360px]",
+      }[activeTab]}`}>
+      <div className="flex-1 relative h-full">
+        <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
+          Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
+        </div>
+        <ReactFlow
+          key={activeTab}
+          nodes={activeNodes}
+          edges={activeEdges}
+          nodeTypes={nodeTypes}
+          onSelectionChange={({ nodes }) => {
+            if (nodes.length > 0) {
+              setSelectedNode(nodes[0] as unknown as CustomTopologyNode);
+            } else {
+              setSelectedNode(null);
+            }
+          }}
+          fitView
+          fitViewOptions={{ padding: 0.15 }}
+          minZoom={0.2}
+          maxZoom={1.5}
+          preventScrolling={false}
+          nodesDraggable={false}
+          nodesConnectable={false}
+          zoomOnScroll={false}
+          zoomOnDoubleClick={false}
+          zoomOnPinch={false}
+          panOnScroll={false}
+          panOnDrag={false}
+        >
+          <Background color="var(--color-bg-primary)" gap={16} size={1} />
+        </ReactFlow>
+      </div>
+
+      {/* Right-hand detailed sidebar popover */}
+      {selectedNode && selectedNode.data?.details && (
+        <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
+          {/* Header */}
+          <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
+            <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
+              {selectedNode.data.label}
+            </span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedNode(null);
+                setNodes((nodes) =>
+                  nodes.map((n) => ({ ...n, selected: false }))
+                );
+              }}
+              className="text-[10px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer shrink-0 mt-0.5"
+              title="Close Details"
+            >
+              [X]
+            </button>
+          </div>
+          {/* What is */}
+          <div className="space-y-1">
+            <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it is</span>
+            <p className="text-[11px] text-text-primary leading-relaxed">{selectedNode.data.details.whatIs}</p>
+          </div>
+          {/* What for */}
+          <div className="space-y-1">
+            <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it does here</span>
+            <p className="text-[11px] text-text-secondary leading-relaxed">{selectedNode.data.details.whatFor}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const Architecture: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -1104,25 +1209,6 @@ export const Architecture: React.FC = () => {
   const activeNodes = useMemo(() => topologyData[activeTab].nodes, [activeTab, topologyData]);
   const activeEdges = useMemo(() => topologyData[activeTab].edges, [activeTab, topologyData]);
 
-  interface CustomTopologyNode {
-    id: string;
-    data: {
-      label: string;
-      subtitle?: string;
-      status?: string;
-      details?: {
-        whatIs: string;
-        whatFor: string;
-      };
-    };
-  }
-
-  const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
-
-  // Clear node detail sidebar selection on tab switcher changes
-  useEffect(() => {
-    setSelectedNode(null);
-  }, [activeTab]);
 
   return (
     <div className="space-y-12">
@@ -1183,75 +1269,9 @@ export const Architecture: React.FC = () => {
           })}
         </div>
 
-        <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
-            TRINETRA:    "h-[680px]",
-            RUNTIME:     "h-[440px]",
-            DEVSECWATCH: "h-[440px]",
-            PLANWIZZ:    "h-[360px]",
-            DUNESDAY:    "h-[360px]",
-          }[activeTab]}`}>
-          <div className="flex-1 relative h-full">
-            <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
-              Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
-            </div>
-            <ReactFlow
-              key={activeTab}
-              nodes={activeNodes}
-              edges={activeEdges}
-              nodeTypes={nodeTypes}
-              onSelectionChange={({ nodes }) => {
-                if (nodes.length > 0) {
-                  setSelectedNode(nodes[0] as unknown as CustomTopologyNode);
-                } else {
-                  setSelectedNode(null);
-                }
-              }}
-              fitView
-              fitViewOptions={{ padding: 0.15 }}
-              minZoom={0.2}
-              maxZoom={1.5}
-              preventScrolling={false}
-              nodesDraggable={false}
-              nodesConnectable={false}
-              zoomOnScroll={false}
-              zoomOnDoubleClick={false}
-              zoomOnPinch={false}
-              panOnScroll={false}
-              panOnDrag={false}
-            >
-              <Background color="var(--color-bg-primary)" gap={16} size={1} />
-            </ReactFlow>
-          </div>
-
-          {/* Right-hand detailed sidebar popover */}
-          {selectedNode && selectedNode.data?.details && (
-            <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
-              {/* Header */}
-              <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
-                <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
-                  {selectedNode.data.label}
-                </span>
-                <button
-                  onClick={() => setSelectedNode(null)}
-                  className="text-[10px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer shrink-0 mt-0.5"
-                  title="Close Details"
-                >
-                  [X]
-                </button>
-              </div>
-              {/* What is */}
-              <div className="space-y-1">
-                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it is</span>
-                <p className="text-[11px] text-text-primary leading-relaxed">{selectedNode.data.details.whatIs}</p>
-              </div>
-              {/* What for */}
-              <div className="space-y-1">
-                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it does here</span>
-                <p className="text-[11px] text-text-secondary leading-relaxed">{selectedNode.data.details.whatFor}</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <ReactFlowProvider>
+          <TopologyMapPanel activeTab={activeTab} activeNodes={activeNodes} activeEdges={activeEdges} />
+        </ReactFlowProvider>
         
         <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
           <strong>Translation:</strong> This diagram maps the microservice hosts configured across our cluster. {activeTab === "TRINETRA" ? "This topology remains high-level, outlining simple transactional ingestion and intelligence boundaries." : activeTab === "DUNESDAY" ? "Shows the FastAPI prediction service querying XGBoost ML models and returning SHAP explainability matrices." : activeTab === "PLANWIZZ" ? "Shows PDF inputs running to the Spring API service, solved via CSP schedule constraints." : "Shows scanning jobs queueing asynchronously in RabbitMQ, with cache nodes buffering metadata queries."}
