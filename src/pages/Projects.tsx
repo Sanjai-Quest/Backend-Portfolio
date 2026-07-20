@@ -61,31 +61,31 @@ const DevSecWatchDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId
 
     {/* Orthogonal Connections (Zero Crossovers) */}
     {/* Client -> Gateway (Sync Call) */}
-    <path d="M 300 55 V 75" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    <path d="M 300 55 V 75" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
     
     {/* Gateway -> Cache (Sync Call) */}
-    <path d="M 240 95 H 120 V 135" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 240 95 H 120 V 135" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
     
     {/* Gateway -> DB (Sync Call) */}
-    <path d="M 300 115 V 135" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 115 V 135" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
     
     {/* Gateway -> Broker (Async Publish) */}
-    <path d="M 360 95 H 480 V 135" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 360 95 H 480 V 135" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Broker -> Worker (Async Consume) */}
-    <path d="M 480 175 V 205" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 480 175 V 205" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Worker -> DB (Sync SQL) */}
-    <path d="M 420 220 H 300 V 175" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 420 220 H 300 V 175" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Worker -> Cache (Sync Query - routed below DB to prevent crossovers) */}
-    <path d="M 480 245 V 255 H 120 V 175" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 480 245 V 255 H 120 V 175" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Worker -> AI Service (Sync API Call) */}
-    <path d="M 420 225 H 380 V 285 H 360" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 420 225 H 380 V 285 H 360" fill="none" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* AI Service -> External API (Third-party Dotted Call) */}
-    <path d="M 240 285 H 180" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" markerEnd="url(#arrow)" />
+    <path d="M 240 285 H 180" fill="none" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" markerEnd="url(#arrow)" />
 
     {/* Legend */}
     <g transform="translate(15, 322)" font-family="monospace" font-size="7" fill="#7B8FA6">
@@ -164,26 +164,26 @@ const TriNetraDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
 
     {/* Orthogonal Connectors (Zero Crossovers) */}
     {/* Tier 1 Client -> Tier 2 Entry */}
-    <path d="M 300 55 V 75" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 55 V 75" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
     
     {/* Tier 2 Entry <-> Tier 2 Compliance (Dashed DPDPA Link) */}
-    <path d="M 360 95 H 420" stroke="#EF4444" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    <path d="M 360 95 H 420" fill="none" stroke="#EF4444" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
 
     {/* Tier 2 Entry -> Tier 3 Broker (Async Event Publish) */}
-    <path d="M 300 115 V 135" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 115 V 135" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Tier 3 Broker -> Tier 4 Processing (Async Event Ingestion) */}
-    <path d="M 240 155 H 120 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 300 175 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 360 155 H 480 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 240 155 H 120 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 175 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 360 155 H 480 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Tier 4 Processing -> Tier 5 Scoring */}
-    <path d="M 120 235 V 275 H 240" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 300 235 V 255" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 480 235 V 275 H 360" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 120 235 V 275 H 240" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 235 V 255" fill="none" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 480 235 V 275 H 360" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Tier 5 Scoring -> Tier 6 UI Console */}
-    <path d="M 300 295 V 315" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 295 V 315" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Legend */}
     <g transform="translate(15, 362)" font-family="monospace" font-size="7" fill="#7B8FA6">
@@ -239,11 +239,11 @@ const PlanWizzDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
 
     {/* Orthogonal Connectors */}
     {/* Tier 1 -> Tier 2 */}
-    <path d="M 300 55 V 85" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    <path d="M 300 55 V 85" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
     
     {/* Tier 2 -> Tier 3 */}
-    <path d="M 240 105 H 160 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 360 105 H 440 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 240 105 H 160 V 155" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 360 105 H 440 V 155" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Legend */}
     <g transform="translate(15, 222)" font-family="monospace" font-size="7" fill="#7B8FA6">
@@ -289,10 +289,10 @@ const DunesDayDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
 
     {/* Connectors */}
     {/* Tier 1 -> Tier 2 */}
-    <path d="M 300 55 V 85" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    <path d="M 300 55 V 85" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
     
     {/* Tier 2 -> Tier 3 */}
-    <path d="M 300 125 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 125 V 155" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
     {/* Legend */}
     <g transform="translate(15, 222)" font-family="monospace" font-size="7" fill="#7B8FA6">
