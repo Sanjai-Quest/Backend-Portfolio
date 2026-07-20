@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { ReactFlow, Background, Controls, type Node } from "@xyflow/react";
+import { ReactFlow, Background } from "@xyflow/react";
 import { useReducedMotion } from "framer-motion";
 import { Database, Server, Send, Layers, AlertTriangle } from "lucide-react";
 
@@ -1104,7 +1104,20 @@ export const Architecture: React.FC = () => {
   const activeNodes = useMemo(() => topologyData[activeTab].nodes, [activeTab, topologyData]);
   const activeEdges = useMemo(() => topologyData[activeTab].edges, [activeTab, topologyData]);
 
-  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  interface CustomTopologyNode {
+    id: string;
+    data: {
+      label: string;
+      subtitle?: string;
+      status?: string;
+      details?: {
+        whatIs: string;
+        whatFor: string;
+      };
+    };
+  }
+
+  const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
 
   // Clear node detail sidebar selection on tab switcher changes
   useEffect(() => {
@@ -1170,64 +1183,71 @@ export const Architecture: React.FC = () => {
           })}
         </div>
 
-        <div className="border border-border-primary rounded-xl bg-card-bg h-[360px] relative overflow-hidden flex flex-row">
+        <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
+            TRINETRA:    "h-[560px]",
+            RUNTIME:     "h-[380px]",
+            DEVSECWATCH: "h-[380px]",
+            PLANWIZZ:    "h-[360px]",
+            DUNESDAY:    "h-[360px]",
+          }[activeTab]}`}>
           <div className="flex-1 relative h-full">
             <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
               Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
             </div>
             <ReactFlow
+              key={activeTab}
               nodes={activeNodes}
               edges={activeEdges}
               nodeTypes={nodeTypes}
               onSelectionChange={({ nodes }) => {
                 if (nodes.length > 0) {
-                  setSelectedNode(nodes[0]);
+                  setSelectedNode(nodes[0] as unknown as CustomTopologyNode);
                 } else {
                   setSelectedNode(null);
                 }
               }}
               fitView
-              fitViewOptions={{ padding: 0.15 }}
-              preventScrolling={true}
+              fitViewOptions={{ padding: activeTab === "TRINETRA" ? 0.08 : 0.15 }}
+              minZoom={0.2}
+              maxZoom={1.5}
+              preventScrolling={false}
               nodesDraggable={false}
               nodesConnectable={false}
               zoomOnScroll={false}
-              zoomOnDoubleClick={false}
-              zoomOnPinch={false}
+              zoomOnDoubleClick={true}
+              zoomOnPinch={true}
               panOnScroll={false}
-              panOnDrag={false}
+              panOnDrag={true}
             >
               <Background color="var(--color-bg-primary)" gap={16} size={1} />
-              <Controls className="!bg-card-bg !border !border-border-primary !text-text-primary !shadow-none scale-75" />
             </ReactFlow>
           </div>
 
           {/* Right-hand detailed sidebar popover */}
           {selectedNode && selectedNode.data?.details && (
-            <div className="w-72 border-l border-border-primary/80 bg-card-bg/95 h-full p-4 z-50 flex flex-col justify-between text-left font-mono relative animate-in slide-in-from-right duration-150 select-text">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-border-primary/60 pb-2">
-                  <span className="font-bold text-[10px] text-signature uppercase tracking-wider">
-                    {selectedNode.data.label}
-                  </span>
-                  <button
-                    onClick={() => setSelectedNode(null)}
-                    className="text-[9px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer"
-                    title="Close Details"
-                  >
-                    [X]
-                  </button>
-                </div>
-                <div className="space-y-3.5 text-[9px] leading-relaxed">
-                  <div>
-                    <span className="text-text-muted uppercase font-bold tracking-wider block mb-0.5">what is:</span>
-                    <span className="text-text-primary">{selectedNode.data.details.whatIs}</span>
-                  </div>
-                  <div>
-                    <span className="text-text-muted uppercase font-bold tracking-wider block mb-0.5">what for, here specifically:</span>
-                    <span className="text-text-secondary">{selectedNode.data.details.whatFor}</span>
-                  </div>
-                </div>
+            <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
+                <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
+                  {selectedNode.data.label}
+                </span>
+                <button
+                  onClick={() => setSelectedNode(null)}
+                  className="text-[10px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer shrink-0 mt-0.5"
+                  title="Close Details"
+                >
+                  [X]
+                </button>
+              </div>
+              {/* What is */}
+              <div className="space-y-1">
+                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it is</span>
+                <p className="text-[11px] text-text-primary leading-relaxed">{selectedNode.data.details.whatIs}</p>
+              </div>
+              {/* What for */}
+              <div className="space-y-1">
+                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it does here</span>
+                <p className="text-[11px] text-text-secondary leading-relaxed">{selectedNode.data.details.whatFor}</p>
               </div>
             </div>
           )}
