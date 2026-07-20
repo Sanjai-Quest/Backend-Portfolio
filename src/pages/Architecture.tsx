@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { ReactFlow, Background, useNodesState, useEdgesState } from "@xyflow/react";
+import { ReactFlow, Background, ReactFlowProvider, useReactFlow, useNodesState, useEdgesState, useNodesInitialized, type Node, type Edge } from "@xyflow/react";
 import { useReducedMotion } from "framer-motion";
 import { Database, Server, Send, Layers, AlertTriangle } from "lucide-react";
 
@@ -43,6 +43,118 @@ interface CustomTopologyNode {
   };
 }
 
+const TopologyMapPanel: React.FC<{
+  activeTab: TopologyType;
+  activeNodes: Node[];
+  activeEdges: Edge[];
+}> = ({ activeTab, activeNodes, activeEdges }) => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(activeNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(activeEdges);
+  const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
+  const nodesInitialized = useNodesInitialized();
+  const { fitView } = useReactFlow();
+
+  // Sync props to state on tab switch or data changes
+  useEffect(() => {
+    setNodes(activeNodes);
+    setEdges(activeEdges);
+  }, [activeTab, activeNodes, activeEdges, setNodes, setEdges]);
+
+  // Clear selection on tab switch
+  useEffect(() => {
+    setSelectedNode(null);
+  }, [activeTab]);
+
+  // Execute fitView only after React Flow measures custom node dimensions
+  useEffect(() => {
+    if (nodesInitialized) {
+      const timer = setTimeout(() => {
+        fitView({ padding: 0.15 });
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [nodesInitialized, fitView, activeTab]);
+
+  return (
+    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
+        TRINETRA:    "h-[600px]",
+        RUNTIME:     "h-[420px]",
+        DEVSECWATCH: "h-[420px]",
+        PLANWIZZ:    "h-[340px]",
+        DUNESDAY:    "h-[340px]",
+      }[activeTab]}`}>
+      <div className="flex-1 relative h-full">
+        <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
+          Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
+        </div>
+        <ReactFlow
+          key={activeTab}
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onSelectionChange={({ nodes: selectedNodes }) => {
+            if (selectedNodes.length > 0) {
+              setSelectedNode(selectedNodes[0] as unknown as CustomTopologyNode);
+            } else {
+              setSelectedNode(null);
+            }
+          }}
+          fitView
+          fitViewOptions={{ padding: 0.15 }}
+          minZoom={0.2}
+          maxZoom={1.0}
+          preventScrolling={false}
+          nodesDraggable={false}
+          nodesConnectable={false}
+          zoomOnScroll={false}
+          zoomOnDoubleClick={false}
+          zoomOnPinch={false}
+          panOnScroll={false}
+          panOnDrag={false}
+        >
+          <Background color="var(--color-bg-primary)" gap={16} size={1} />
+        </ReactFlow>
+      </div>
+
+      {/* Right-hand detailed sidebar popover */}
+      {selectedNode && selectedNode.data?.details && (
+        <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
+          {/* Header */}
+          <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
+            <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
+              {selectedNode.data.label}
+            </span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedNode(null);
+                setNodes((prevNodes) =>
+                  prevNodes.map((n) => ({ ...n, selected: false }))
+                );
+              }}
+              className="text-[10px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer shrink-0 mt-0.5"
+              title="Close Details"
+            >
+              [X]
+            </button>
+          </div>
+          {/* What is */}
+          <div className="space-y-1">
+            <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it is</span>
+            <p className="text-[11px] text-text-primary leading-relaxed">{selectedNode.data.details.whatIs}</p>
+          </div>
+          {/* What for */}
+          <div className="space-y-1">
+            <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it does here</span>
+            <p className="text-[11px] text-text-secondary leading-relaxed">{selectedNode.data.details.whatFor}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const Architecture: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -1115,16 +1227,8 @@ export const Architecture: React.FC = () => {
   };
 
   // Node & Edge selection for react-flow topology graphs
-  const [nodes, setNodes, onNodesChange] = useNodesState(topologyData[activeTab].nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(topologyData[activeTab].edges);
-  const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
-
-  // Sync nodes and edges on tab switch
-  useEffect(() => {
-    setNodes(topologyData[activeTab].nodes);
-    setEdges(topologyData[activeTab].edges);
-    setSelectedNode(null);
-  }, [activeTab, setNodes, setEdges, topologyData]);
+  const activeNodes = useMemo(() => topologyData[activeTab].nodes, [activeTab, topologyData]);
+  const activeEdges = useMemo(() => topologyData[activeTab].edges, [activeTab, topologyData]);
 
 
   return (
@@ -1186,83 +1290,9 @@ export const Architecture: React.FC = () => {
           })}
         </div>
 
-        <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
-            TRINETRA:    "h-[680px]",
-            RUNTIME:     "h-[440px]",
-            DEVSECWATCH: "h-[440px]",
-            PLANWIZZ:    "h-[360px]",
-            DUNESDAY:    "h-[360px]",
-          }[activeTab]}`}>
-          <div className="flex-1 relative h-full">
-            <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
-              Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
-            </div>
-            <ReactFlow
-              key={activeTab}
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              nodeTypes={nodeTypes}
-              onSelectionChange={({ nodes: selected }) => {
-                if (selected.length > 0) {
-                  setSelectedNode(selected[0] as unknown as CustomTopologyNode);
-                } else {
-                  setSelectedNode(null);
-                }
-              }}
-              fitView
-              fitViewOptions={{ padding: 0.15 }}
-              minZoom={0.2}
-              maxZoom={1.5}
-              preventScrolling={false}
-              nodesDraggable={false}
-              nodesConnectable={false}
-              zoomOnScroll={false}
-              zoomOnDoubleClick={false}
-              zoomOnPinch={false}
-              panOnScroll={false}
-              panOnDrag={false}
-            >
-              <Background color="var(--color-bg-primary)" gap={16} size={1} />
-            </ReactFlow>
-          </div>
-
-          {/* Right-hand detailed sidebar popover */}
-          {selectedNode && selectedNode.data?.details && (
-            <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
-              {/* Header */}
-              <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
-                <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
-                  {selectedNode.data.label}
-                </span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedNode(null);
-                    setNodes((nds) =>
-                      nds.map((n) => ({ ...n, selected: false }))
-                    );
-                  }}
-                  className="text-[10px] text-text-muted hover:text-text-primary transition-colors focus:outline-none cursor-pointer shrink-0 mt-0.5"
-                  title="Close Details"
-                >
-                  [X]
-                </button>
-              </div>
-              {/* What is */}
-              <div className="space-y-1">
-                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it is</span>
-                <p className="text-[11px] text-text-primary leading-relaxed">{selectedNode.data.details.whatIs}</p>
-              </div>
-              {/* What for */}
-              <div className="space-y-1">
-                <span className="text-[9px] text-signature/80 uppercase font-bold tracking-widest block">What it does here</span>
-                <p className="text-[11px] text-text-secondary leading-relaxed">{selectedNode.data.details.whatFor}</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <ReactFlowProvider>
+          <TopologyMapPanel activeTab={activeTab} activeNodes={activeNodes} activeEdges={activeEdges} />
+        </ReactFlowProvider>
         
         <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
           <strong>Translation:</strong> This diagram maps the microservice hosts configured across our cluster. {activeTab === "TRINETRA" ? "This topology remains high-level, outlining simple transactional ingestion and intelligence boundaries." : activeTab === "DUNESDAY" ? "Shows the FastAPI prediction service querying XGBoost ML models and returning SHAP explainability matrices." : activeTab === "PLANWIZZ" ? "Shows PDF inputs running to the Spring API service, solved via CSP schedule constraints." : "Shows scanning jobs queueing asynchronously in RabbitMQ, with cache nodes buffering metadata queries."}
