@@ -35,19 +35,107 @@ export const Architecture: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TopologyType>("RUNTIME");
 
   // ==========================================
-  // 1. SYSTEM TOPOLOGY DIAGRAM DATA
-  // ==========================================
   const topologyData = useMemo(() => {
     return {
       RUNTIME: {
         nodes: [
-          { id: "client", type: "blueprint", data: { label: "Client Edge", subtitle: "Web Browser" }, position: { x: 280, y: 10 } },
-          { id: "gateway", type: "blueprint", data: { label: "API Gateway", subtitle: "gateway.internal", status: "Healthy" }, position: { x: 280, y: 100 } },
-          { id: "cache", type: "blueprint", data: { label: "Distributed Cache", subtitle: "redis.internal", status: "Healthy" }, position: { x: 80, y: 190 } },
-          { id: "catalog", type: "blueprint", data: { label: "Service Catalog", subtitle: "catalog.internal", status: "Healthy" }, position: { x: 280, y: 190 } },
-          { id: "db", type: "blueprint", data: { label: "PostgreSQL", subtitle: "postgres.internal", status: "Healthy" }, position: { x: 480, y: 190 } },
-          { id: "queue", type: "blueprint", data: { label: "Message Queue", subtitle: "rabbitmq.internal", status: "Healthy" }, position: { x: 180, y: 290 } },
-          { id: "events", type: "blueprint", data: { label: "Event Pipeline", subtitle: "kafka.internal", status: "Healthy" }, position: { x: 380, y: 290 } },
+          {
+            id: "client",
+            type: "blueprint",
+            data: {
+              label: "Client Edge",
+              subtitle: "Web Browser",
+              details: {
+                whatIs: "React and TypeScript single-page application executing inside the browser environment.",
+                whatFor: "Serves as the frontend edge, parsing URL paths, managing local UI states, and rendering visual telemetry components."
+              }
+            },
+            position: { x: 280, y: 10 }
+          },
+          {
+            id: "gateway",
+            type: "blueprint",
+            data: {
+              label: "API Gateway",
+              subtitle: "gateway.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "An edge proxy routing controller handling incoming client requests.",
+                whatFor: "Acts as the unified point of entry, proxying page requests and telemetry payloads downstream to backend hosts."
+              }
+            },
+            position: { x: 280, y: 100 }
+          },
+          {
+            id: "cache",
+            type: "blueprint",
+            data: {
+              label: "Distributed Cache",
+              subtitle: "redis.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "An in-memory key-value database buffer powered by Redis.",
+                whatFor: "Caches service records and static inventory payloads to bypass PostgreSQL queries and minimize response latency."
+              }
+            },
+            position: { x: 80, y: 190 }
+          },
+          {
+            id: "catalog",
+            type: "blueprint",
+            data: {
+              label: "Service Catalog",
+              subtitle: "catalog.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "An administrative service controller managing project configuration metadata.",
+                whatFor: "Decouples query routes, keeps registry configurations synced, and triggers message buffers when status changes occur."
+              }
+            },
+            position: { x: 280, y: 190 }
+          },
+          {
+            id: "db",
+            type: "blueprint",
+            data: {
+              label: "PostgreSQL",
+              subtitle: "postgres.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "A relational database management storage system.",
+                whatFor: "Maintains structured repository records, logs persistent deployment stats, and tracks static metadata records."
+              }
+            },
+            position: { x: 480, y: 190 }
+          },
+          {
+            id: "queue",
+            type: "blueprint",
+            data: {
+              label: "Message Queue",
+              subtitle: "rabbitmq.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "A reliable message broker exchange utilizing RabbitMQ.",
+                whatFor: "Decouples task scheduling by holding heavy catalog scan jobs until background processing instances can consume them."
+              }
+            },
+            position: { x: 180, y: 290 }
+          },
+          {
+            id: "events",
+            type: "blueprint",
+            data: {
+              label: "Event Pipeline",
+              subtitle: "kafka.internal",
+              status: "Healthy",
+              details: {
+                whatIs: "An event broker log distributor powered by Kafka.",
+                whatFor: "Publishes high-frequency transaction updates, pipeline telemetry packets, and log streams for the admin views."
+              }
+            },
+            position: { x: 380, y: 290 }
+          },
         ],
         edges: [
           { id: "e1", source: "client", target: "gateway", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
@@ -60,10 +148,59 @@ export const Architecture: React.FC = () => {
       },
       PLANWIZZ: {
         nodes: [
-          { id: "client", type: "blueprint", data: { label: "React Frontend", subtitle: "Web UI" }, position: { x: 280, y: 10 } },
-          { id: "api", type: "blueprint", data: { label: "Spring Boot API", subtitle: "planwizz-core", status: "Healthy" }, position: { x: 280, y: 100 } },
-          { id: "parser", type: "blueprint", data: { label: "PDF Parser", subtitle: "Data Ingestion" }, position: { x: 140, y: 200 } },
-          { id: "csp", type: "blueprint", data: { label: "CSP Engine", subtitle: "Schedule Solver" }, position: { x: 420, y: 200 } },
+          {
+            id: "client",
+            type: "blueprint",
+            data: {
+              label: "React Frontend",
+              subtitle: "Web UI",
+              details: {
+                whatIs: "A React browser single-page application interface.",
+                whatFor: "Accepts course PDF syllabus uploads and lets students configure schedule constraint requirements."
+              }
+            },
+            position: { x: 280, y: 10 }
+          },
+          {
+            id: "api",
+            type: "blueprint",
+            data: {
+              label: "Spring Boot API",
+              subtitle: "planwizz-core",
+              status: "Healthy",
+              details: {
+                whatIs: "The core backend API engine built using Spring Boot.",
+                whatFor: "Receives raw document payloads and delegates scheduling constraint calculations to the CSP engine."
+              }
+            },
+            position: { x: 280, y: 100 }
+          },
+          {
+            id: "parser",
+            type: "blueprint",
+            data: {
+              label: "PDF Parser",
+              subtitle: "Data Ingestion",
+              details: {
+                whatIs: "A document scanner extracting text structured elements from PDF files.",
+                whatFor: "Parses course curriculum codes, lecture periods, and department names out of raw PDFs."
+              }
+            },
+            position: { x: 140, y: 200 }
+          },
+          {
+            id: "csp",
+            type: "blueprint",
+            data: {
+              label: "CSP Engine",
+              subtitle: "Schedule Solver",
+              details: {
+                whatIs: "A constraint satisfaction solver executing backtracking search heuristics.",
+                whatFor: "Processes parsed JSON course records to compute optimized, clash-free timetables matching student preferences."
+              }
+            },
+            position: { x: 420, y: 200 }
+          },
         ],
         edges: [
           { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
@@ -73,13 +210,99 @@ export const Architecture: React.FC = () => {
       },
       DEVSECWATCH: {
         nodes: [
-          { id: "client", type: "blueprint", data: { label: "Vite Client", subtitle: "Browser UI" }, position: { x: 280, y: 10 } },
-          { id: "api", type: "blueprint", data: { label: "Gateway API", subtitle: "devsecwatch-core", status: "Healthy" }, position: { x: 280, y: 100 } },
-          { id: "redis", type: "blueprint", data: { label: "Redis Cache", subtitle: "Scan Cache" }, position: { x: 80, y: 190 } },
-          { id: "rabbitmq", type: "blueprint", data: { label: "RabbitMQ", subtitle: "Broker Exchange", status: "Healthy" }, position: { x: 280, y: 190 } },
-          { id: "postgres", type: "blueprint", data: { label: "PostgreSQL", subtitle: "Scan Database" }, position: { x: 480, y: 190 } },
-          { id: "semgrep", type: "blueprint", data: { label: "Semgrep Worker", subtitle: "Code Scanner" }, position: { x: 280, y: 280 } },
-          { id: "groq", type: "blueprint", data: { label: "Groq AI Agent", subtitle: "Explain Findings" }, position: { x: 480, y: 280 } },
+          {
+            id: "client",
+            type: "blueprint",
+            data: {
+              label: "Vite Client",
+              subtitle: "Browser UI",
+              details: {
+                whatIs: "A React single-page frontend leveraging TypeScript.",
+                whatFor: "Maintains active WebSocket links to show code scanning logs and AI vulnerability summaries live."
+              }
+            },
+            position: { x: 280, y: 10 }
+          },
+          {
+            id: "api",
+            type: "blueprint",
+            data: {
+              label: "Gateway API",
+              subtitle: "devsecwatch-core",
+              status: "Healthy",
+              details: {
+                whatIs: "A Spring Boot API Gateway microservice running on port 8080.",
+                whatFor: "Provides secure endpoint authentication, validates scan tokens, and publishes requests to RabbitMQ."
+              }
+            },
+            position: { x: 280, y: 100 }
+          },
+          {
+            id: "redis",
+            type: "blueprint",
+            data: {
+              label: "Redis Cache",
+              subtitle: "Scan Cache",
+              details: {
+                whatIs: "An in-memory Redis caching node running on port 6379.",
+                whatFor: "Stores rate-limiting metrics and scan report summaries to bypass heavy compilation checks on recurring scans."
+              }
+            },
+            position: { x: 80, y: 190 }
+          },
+          {
+            id: "rabbitmq",
+            type: "blueprint",
+            data: {
+              label: "RabbitMQ",
+              subtitle: "Broker Exchange",
+              status: "Healthy",
+              details: {
+                whatIs: "An asynchronous message broker exchange handling scan queues on port 5672.",
+                whatFor: "Orchestrates scan-jobs and scan-cancellation channels, buffering jobs so the Gateway is not blocked."
+              }
+            },
+            position: { x: 280, y: 190 }
+          },
+          {
+            id: "postgres",
+            type: "blueprint",
+            data: {
+              label: "PostgreSQL",
+              subtitle: "Scan Database",
+              details: {
+                whatIs: "A relational database storage engine running on port 5433.",
+                whatFor: "Holds persistent user accounts, repository registration details, and permanent vulnerability scan reports."
+              }
+            },
+            position: { x: 480, y: 190 }
+          },
+          {
+            id: "semgrep",
+            type: "blueprint",
+            data: {
+              label: "Semgrep Worker",
+              subtitle: "Code Scanner",
+              details: {
+                whatIs: "A Spring Boot scanning microservice worker running on port 8081.",
+                whatFor: "Pulls scan jobs, clones repository files, runs Semgrep scanning rules, and persists vulnerabilities found."
+              }
+            },
+            position: { x: 280, y: 280 }
+          },
+          {
+            id: "groq",
+            type: "blueprint",
+            data: {
+              label: "Groq AI Agent",
+              subtitle: "Explain Findings",
+              details: {
+                whatIs: "A FastAPI Python service wrapper running on port 8000.",
+                whatFor: "Interfaces with Groq's Llama model to summarize vulnerabilities and provide developers with clean fixes."
+              }
+            },
+            position: { x: 480, y: 280 }
+          },
         ],
         edges: [
           { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
@@ -94,18 +317,164 @@ export const Architecture: React.FC = () => {
       },
       TRINETRA: {
         nodes: [
-          { id: "portal", type: "blueprint", data: { label: "Customer Portal", subtitle: "Claims Intake UI" }, position: { x: 100, y: 10 } },
-          { id: "dashboard", type: "blueprint", data: { label: "Admin Dashboard", subtitle: "D3.js Risk Console" }, position: { x: 460, y: 10 } },
-          { id: "gateway", type: "blueprint", data: { label: "API Gateway (Traefik)", subtitle: "Edge Routing Proxy", status: "Healthy" }, position: { x: 280, y: 100 } },
-          { id: "return-api", type: "blueprint", data: { label: "Return API", subtitle: "Spring Boot State Machine" }, position: { x: 80, y: 190 } },
-          { id: "fraud-engine", type: "blueprint", data: { label: "Fraud Engine", subtitle: "FastAPI / 6 Detectors" }, position: { x: 280, y: 190 } },
-          { id: "graph-service", type: "blueprint", data: { label: "Graph Service", subtitle: "FastAPI / NetworkX" }, position: { x: 480, y: 190 } },
-          { id: "event-stream", type: "blueprint", data: { label: "Event Stream (Redpanda)", subtitle: "Kafka-Compatible Broker", status: "Healthy" }, position: { x: 280, y: 280 } },
-          { id: "workers", type: "blueprint", data: { label: "5 Fraud Workers (Celery)", subtitle: "Parallel Ingestion" }, position: { x: 280, y: 370 } },
-          { id: "aggregator", type: "blueprint", data: { label: "Score Aggregator", subtitle: "0 - 100 Risk Engine" }, position: { x: 280, y: 460 } },
-          { id: "redis", type: "blueprint", data: { label: "Redis (results)", subtitle: "Temporary Cache Store" }, position: { x: 100, y: 550 } },
-          { id: "postgres", type: "blueprint", data: { label: "PostgreSQL (persistent)", subtitle: "Immutable Audit Logs" }, position: { x: 460, y: 550 } },
-          { id: "monitoring", type: "blueprint", data: { label: "Prometheus + Grafana", subtitle: "Observability Badge" }, position: { x: 500, y: 280 } },
+          {
+            id: "portal",
+            type: "blueprint",
+            data: {
+              label: "Customer Portal",
+              subtitle: "Claims Intake UI",
+              details: {
+                whatIs: "A retail checkout application interface.",
+                whatFor: "Submits purchase data and return requests to Traefik for fraud validation processing."
+              }
+            },
+            position: { x: 100, y: 10 }
+          },
+          {
+            id: "dashboard",
+            type: "blueprint",
+            data: {
+              label: "Admin Dashboard",
+              subtitle: "D3.js Risk Console",
+              details: {
+                whatIs: "An administrative visual monitoring application.",
+                whatFor: "Renders active fraud rings and maps suspicious transaction clusters using a D3.js console."
+              }
+            },
+            position: { x: 460, y: 10 }
+          },
+          {
+            id: "gateway",
+            type: "blueprint",
+            data: {
+              label: "API Gateway (Traefik)",
+              subtitle: "Edge Routing Proxy",
+              status: "Healthy",
+              details: {
+                whatIs: "A reverse proxy and request router powered by Traefik.",
+                whatFor: "Acts as the single external gateway entry point routing return traffic downstream."
+              }
+            },
+            position: { x: 280, y: 100 }
+          },
+          {
+            id: "return-api",
+            type: "blueprint",
+            data: {
+              label: "Return API",
+              subtitle: "Spring Boot State Machine",
+              details: {
+                whatIs: "A return management state machine built using Spring Boot.",
+                whatFor: "Tracks claim lifecycles and publishes transaction events downstream to the Redpanda queue."
+              }
+            },
+            position: { x: 80, y: 190 }
+          },
+          {
+            id: "fraud-engine",
+            type: "blueprint",
+            data: {
+              label: "Fraud Engine",
+              subtitle: "FastAPI / 6 Detectors",
+              details: {
+                whatIs: "A Python fraud evaluation backend built in FastAPI.",
+                whatFor: "Runs image EXIF metadata checks, error level analysis (ELA), and behavior checks on incoming return details."
+              }
+            },
+            position: { x: 280, y: 190 }
+          },
+          {
+            id: "graph-service",
+            type: "blueprint",
+            data: {
+              label: "Graph Service",
+              subtitle: "FastAPI / NetworkX",
+              details: {
+                whatIs: "A network graph analytics engine utilizing NetworkX.",
+                whatFor: "Analyzes merchant transactions to spot ring returns and suspect circular account paths."
+              }
+            },
+            position: { x: 480, y: 190 }
+          },
+          {
+            id: "event-stream",
+            type: "blueprint",
+            data: {
+              label: "Event Stream (Redpanda)",
+              subtitle: "Kafka-Compatible Broker",
+              status: "Healthy",
+              details: {
+                whatIs: "A high-performance event streaming message queue.",
+                whatFor: "Streams raw claim events to background Celery workers for parallel processing."
+              }
+            },
+            position: { x: 280, y: 280 }
+          },
+          {
+            id: "workers",
+            type: "blueprint",
+            data: {
+              label: "5 Fraud Workers (Celery)",
+              subtitle: "Parallel Ingestion",
+              details: {
+                whatIs: "Concurrent task processors managed via Celery.",
+                whatFor: "Ingest event messages and execute heavy image scanning, receipt checks, and behavioral analysis tasks in parallel."
+              }
+            },
+            position: { x: 280, y: 370 }
+          },
+          {
+            id: "aggregator",
+            type: "blueprint",
+            data: {
+              label: "Score Aggregator",
+              subtitle: "0 - 100 Risk Engine",
+              details: {
+                whatIs: "An analytical scoring module combining security metrics.",
+                whatFor: "Merges inputs from fraud models and graph checkers to yield a consolidated risk value."
+              }
+            },
+            position: { x: 280, y: 460 }
+          },
+          {
+            id: "redis",
+            type: "blueprint",
+            data: {
+              label: "Redis (results)",
+              subtitle: "Temporary Cache Store",
+              details: {
+                whatIs: "An in-memory key-value database buffer.",
+                whatFor: "Caches calculated fraud check outputs for instant retrieval by dashboard consoles."
+              }
+            },
+            position: { x: 100, y: 550 }
+          },
+          {
+            id: "postgres",
+            type: "blueprint",
+            data: {
+              label: "PostgreSQL (persistent)",
+              subtitle: "Immutable Audit Logs",
+              details: {
+                whatIs: "A persistent relational database management system.",
+                whatFor: "Stores historic return invoices and audit trails required under DPDPA privacy compliance guidelines."
+              }
+            },
+            position: { x: 460, y: 550 }
+          },
+          {
+            id: "monitoring",
+            type: "blueprint",
+            data: {
+              label: "Prometheus + Grafana",
+              subtitle: "Observability Badge",
+              details: {
+                whatIs: "An independent metrics dashboard pipeline.",
+                whatFor: "Tracks broker processing latency and monitors cluster performance without blocking event transactions."
+              }
+            },
+            position: { x: 500, y: 280 }
+          },
         ],
         edges: [
           { id: "e1", source: "portal", target: "gateway", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#7B8FA6", strokeWidth: 1.5 } },
@@ -125,9 +494,46 @@ export const Architecture: React.FC = () => {
       },
       DUNESDAY: {
         nodes: [
-          { id: "client", type: "blueprint", data: { label: "React SPA", subtitle: "Tweaks & Predictor UI" }, position: { x: 280, y: 10 } },
-          { id: "api", type: "blueprint", data: { label: "FastAPI API", subtitle: "dunesday-service", status: "Healthy" }, position: { x: 280, y: 110 } },
-          { id: "model", type: "blueprint", data: { label: "XGBoost Model", subtitle: "SHAP Explainable AI" }, position: { x: 280, y: 210 } },
+          {
+            id: "client",
+            type: "blueprint",
+            data: {
+              label: "React SPA",
+              subtitle: "Tweaks & Predictor UI",
+              details: {
+                whatIs: "A browser-based client application powered by React and Recharts.",
+                whatFor: "Provides interactive parameter sliders (budget, cast) and sends predictions down to the FastAPI server."
+              }
+            },
+            position: { x: 280, y: 10 }
+          },
+          {
+            id: "api",
+            type: "blueprint",
+            data: {
+              label: "FastAPI API",
+              subtitle: "dunesday-service",
+              status: "Healthy",
+              details: {
+                whatIs: "A high-performance Python web framework API.",
+                whatFor: "Serves prediction request interfaces and routes attributes directly to the box-office models."
+              }
+            },
+            position: { x: 280, y: 110 }
+          },
+          {
+            id: "model",
+            type: "blueprint",
+            data: {
+              label: "XGBoost Model",
+              subtitle: "SHAP Explainable AI",
+              details: {
+                whatIs: "An ensemble ML model and SHAP feature importance processor.",
+                whatFor: "Runs box-office calculations using XGBoost and computes explainable SHAP values in response to client inputs."
+              }
+            },
+            position: { x: 280, y: 210 }
+          },
         ],
         edges: [
           { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },

@@ -1,21 +1,61 @@
-import React from "react";
-import { Handle, Position } from "@xyflow/react";
+import React, { useEffect, useRef } from "react";
+import { Handle, Position, useReactFlow } from "@xyflow/react";
 
 interface BlueprintNodeProps {
+  id: string;
   data: {
     label: string;
     subtitle?: string;
     status?: string;
+    details?: {
+      whatIs: string;
+      whatFor: string;
+    };
   };
   selected?: boolean;
 }
 
-export const BlueprintNode: React.FC<BlueprintNodeProps> = ({ data, selected }) => {
+export const BlueprintNode: React.FC<BlueprintNodeProps> = ({ id, data, selected }) => {
   const isHealthy = data.status === "Healthy" || data.status === "Running";
+  const { setNodes } = useReactFlow();
+  const nodeRef = useRef<HTMLDivElement>(null);
+
+  // Focus the node container visually if selected
+  useEffect(() => {
+    if (selected && nodeRef.current) {
+      nodeRef.current.focus();
+    }
+  }, [selected]);
+
+  // Handle keydown events for selection trigger and escape deselect
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setNodes((nodes) =>
+        nodes.map((n) => ({
+          ...n,
+          selected: n.id === id,
+        }))
+      );
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      setNodes((nodes) => nodes.map((n) => ({ ...n, selected: false })));
+    }
+  };
+
+  const handleClosePanel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setNodes((nodes) =>
+      nodes.map((n) => (n.id === id ? { ...n, selected: false } : n))
+    );
+  };
 
   return (
     <div
-      className={`relative px-4 py-3 bg-card-bg/95 border rounded font-mono text-[11px] text-text-primary text-center min-w-[140px] select-none transition-all duration-150 ${
+      ref={nodeRef}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      className={`relative px-4 py-3 bg-card-bg/95 border rounded font-mono text-[11px] text-text-primary text-center min-w-[140px] select-none transition-all duration-150 outline-none focus:ring-1 focus:ring-signature focus:border-signature ${
         selected ? "border-signature shadow-[0_0_8px_rgba(255,122,69,0.25)]" : "border-border-primary"
       }`}
     >
@@ -58,6 +98,37 @@ export const BlueprintNode: React.FC<BlueprintNodeProps> = ({ data, selected }) 
         position={Position.Bottom}
         className="!bg-border-primary !border !border-card-bg !w-2 !h-2"
       />
+
+      {/* Reveal Detail Panel Popover */}
+      {selected && data.details && (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-[200] w-64 bg-card-bg border border-signature p-3 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.4)] text-left font-mono pointer-events-auto"
+        >
+          <div className="flex items-start justify-between border-b border-border-primary/60 pb-1 mb-1.5">
+            <span className="font-bold text-[10px] text-signature uppercase tracking-wider">
+              {data.label}
+            </span>
+            <button
+              onClick={handleClosePanel}
+              className="text-[9px] text-text-muted hover:text-text-primary transition-colors focus:outline-none"
+              title="Close panel"
+            >
+              [X]
+            </button>
+          </div>
+          <div className="space-y-1.5 text-[9px] leading-relaxed">
+            <div>
+              <span className="text-text-muted uppercase font-bold tracking-wide">what is:</span>{" "}
+              <span className="text-text-primary">{data.details.whatIs}</span>
+            </div>
+            <div>
+              <span className="text-text-muted uppercase font-bold tracking-wide">what for:</span>{" "}
+              <span className="text-text-secondary">{data.details.whatFor}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
