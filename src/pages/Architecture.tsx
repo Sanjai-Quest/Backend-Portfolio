@@ -28,7 +28,7 @@ const nodeTypes = {
   blueprint: BlueprintNode,
 };
 
-type TopologyType = "RUNTIME" | "PLANWIZZ" | "DEVSECWATCH" | "TRINETRA";
+type TopologyType = "RUNTIME" | "PLANWIZZ" | "DEVSECWATCH" | "TRINETRA" | "DUNESDAY";
 
 export const Architecture: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -50,12 +50,12 @@ export const Architecture: React.FC = () => {
           { id: "events", type: "blueprint", data: { label: "Event Pipeline", subtitle: "kafka.internal", status: "Healthy" }, position: { x: 380, y: 290 } },
         ],
         edges: [
-          { id: "e1", source: "client", target: "gateway", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e2", source: "gateway", target: "cache", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e3", source: "gateway", target: "catalog", style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e4", source: "gateway", target: "db", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e5", source: "catalog", target: "queue", style: { stroke: "#21304F", strokeDasharray: "4", strokeWidth: 1.5 } },
-          { id: "e6", source: "catalog", target: "events", style: { stroke: "#21304F", strokeDasharray: "4", strokeWidth: 1.5 } },
+          { id: "e1", source: "client", target: "gateway", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e2", source: "gateway", target: "cache", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e3", source: "gateway", target: "catalog", type: "smoothstep", style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e4", source: "gateway", target: "db", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e5", source: "catalog", target: "queue", type: "smoothstep", style: { stroke: "#21304F", strokeDasharray: "4", strokeWidth: 1.5 } },
+          { id: "e6", source: "catalog", target: "events", type: "smoothstep", style: { stroke: "#21304F", strokeDasharray: "4", strokeWidth: 1.5 } },
         ],
       },
       PLANWIZZ: {
@@ -66,9 +66,9 @@ export const Architecture: React.FC = () => {
           { id: "csp", type: "blueprint", data: { label: "CSP Engine", subtitle: "Schedule Solver" }, position: { x: 420, y: 200 } },
         ],
         edges: [
-          { id: "e1", source: "client", target: "api", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e2", source: "api", target: "parser", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e3", source: "api", target: "csp", style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e2", source: "api", target: "parser", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e3", source: "api", target: "csp", type: "smoothstep", style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
         ],
       },
       DEVSECWATCH: {
@@ -76,18 +76,20 @@ export const Architecture: React.FC = () => {
           { id: "client", type: "blueprint", data: { label: "Vite Client", subtitle: "Browser UI" }, position: { x: 280, y: 10 } },
           { id: "api", type: "blueprint", data: { label: "Gateway API", subtitle: "devsecwatch-core", status: "Healthy" }, position: { x: 280, y: 100 } },
           { id: "redis", type: "blueprint", data: { label: "Redis Cache", subtitle: "Scan Cache" }, position: { x: 80, y: 190 } },
-          { id: "postgres", type: "blueprint", data: { label: "PostgreSQL", subtitle: "Scan Database" }, position: { x: 480, y: 190 } },
           { id: "rabbitmq", type: "blueprint", data: { label: "RabbitMQ", subtitle: "Broker Exchange", status: "Healthy" }, position: { x: 280, y: 190 } },
-          { id: "semgrep", type: "blueprint", data: { label: "Semgrep Worker", subtitle: "Code Scanner" }, position: { x: 140, y: 280 } },
-          { id: "groq", type: "blueprint", data: { label: "Groq AI Agent", subtitle: "Explain Findings" }, position: { x: 420, y: 280 } },
+          { id: "postgres", type: "blueprint", data: { label: "PostgreSQL", subtitle: "Scan Database" }, position: { x: 480, y: 190 } },
+          { id: "semgrep", type: "blueprint", data: { label: "Semgrep Worker", subtitle: "Code Scanner" }, position: { x: 280, y: 280 } },
+          { id: "groq", type: "blueprint", data: { label: "Groq AI Agent", subtitle: "Explain Findings" }, position: { x: 480, y: 280 } },
         ],
         edges: [
-          { id: "e1", source: "client", target: "api", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e2", source: "api", target: "redis", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e3", source: "api", target: "postgres", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e4", source: "api", target: "rabbitmq", style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e5", source: "rabbitmq", target: "semgrep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e6", source: "semgrep", target: "groq", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e2", source: "api", target: "redis", type: "smoothstep", style: { stroke: "#7B8FA6", strokeWidth: 1.5 } },
+          { id: "e3", source: "api", target: "rabbitmq", type: "smoothstep", style: { stroke: "#FF7A45", strokeWidth: 1.5 } },
+          { id: "e4", source: "api", target: "postgres", type: "smoothstep", style: { stroke: "#7B8FA6", strokeWidth: 1.5 } },
+          { id: "e5", source: "rabbitmq", target: "semgrep", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e6", source: "semgrep", target: "groq", type: "smoothstep", style: { stroke: "#7B8FA6", strokeWidth: 1.5 } },
+          { id: "e7", source: "semgrep", target: "redis", type: "smoothstep", style: { stroke: "#7B8FA6", strokeDasharray: "4", strokeWidth: 1.2 } },
+          { id: "e8", source: "semgrep", target: "postgres", type: "smoothstep", style: { stroke: "#7B8FA6", strokeDasharray: "4", strokeWidth: 1.2 } },
         ],
       },
       TRINETRA: {
@@ -98,9 +100,20 @@ export const Architecture: React.FC = () => {
           { id: "postgres", type: "blueprint", data: { label: "PostgreSQL", subtitle: "Store Ledger" }, position: { x: 420, y: 215 } },
         ],
         edges: [
-          { id: "e1", source: "ui", target: "backend", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
-          { id: "e2", source: "backend", target: "model", style: { stroke: "#21304F", strokeWidth: 1.5 } },
-          { id: "e3", source: "backend", target: "postgres", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e1", source: "ui", target: "backend", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e2", source: "backend", target: "model", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+          { id: "e3", source: "backend", target: "postgres", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
+        ],
+      },
+      DUNESDAY: {
+        nodes: [
+          { id: "client", type: "blueprint", data: { label: "React SPA", subtitle: "Tweaks & Predictor UI" }, position: { x: 280, y: 10 } },
+          { id: "api", type: "blueprint", data: { label: "FastAPI API", subtitle: "dunesday-service", status: "Healthy" }, position: { x: 280, y: 110 } },
+          { id: "model", type: "blueprint", data: { label: "XGBoost Model", subtitle: "SHAP Explainable AI" }, position: { x: 280, y: 210 } },
+        ],
+        edges: [
+          { id: "e1", source: "client", target: "api", type: "smoothstep", animated: !shouldReduceMotion, style: { stroke: "#5B95F8", strokeWidth: 1.5 } },
+          { id: "e2", source: "api", target: "model", type: "smoothstep", style: { stroke: "#21304F", strokeWidth: 1.5 } },
         ],
       },
     };
@@ -705,7 +718,7 @@ export const Architecture: React.FC = () => {
         
         {/* Schematic Tab Switcher per DESIGN.md */}
         <div className="flex flex-wrap border-b border-border-primary/60 font-mono text-[10px] md:text-xs">
-          {(["RUNTIME", "PLANWIZZ", "DEVSECWATCH", "TRINETRA"] as TopologyType[]).map((tab) => {
+          {(["RUNTIME", "PLANWIZZ", "DEVSECWATCH", "TRINETRA", "DUNESDAY"] as TopologyType[]).map((tab) => {
             const isActive = activeTab === tab;
             return (
               <button
@@ -751,7 +764,7 @@ export const Architecture: React.FC = () => {
         </div>
         
         <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
-          <strong>Translation:</strong> This diagram maps the microservice hosts configured across our cluster. {activeTab === "TRINETRA" ? "This topology remains high-level, outlining simple transactional ingestion and intelligence boundaries." : activeTab === "PLANWIZZ" ? "Shows PDF inputs running to the Spring API service, solved via CSP schedule constraints." : "Shows scanning jobs queueing asynchronously in RabbitMQ, with cache nodes buffering metadata queries."}
+          <strong>Translation:</strong> This diagram maps the microservice hosts configured across our cluster. {activeTab === "TRINETRA" ? "This topology remains high-level, outlining simple transactional ingestion and intelligence boundaries." : activeTab === "DUNESDAY" ? "Shows the FastAPI prediction service querying XGBoost ML models and returning SHAP explainability matrices." : activeTab === "PLANWIZZ" ? "Shows PDF inputs running to the Spring API service, solved via CSP schedule constraints." : "Shows scanning jobs queueing asynchronously in RabbitMQ, with cache nodes buffering metadata queries."}
         </div>
       </section>
 
