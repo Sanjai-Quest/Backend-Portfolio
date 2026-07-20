@@ -37,7 +37,7 @@ export const TerminalLog: React.FC<TerminalLogProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`font-mono text-[11px] md:text-xs text-text-secondary bg-bg-primary border border-border-primary rounded-lg overflow-y-auto p-4 flex flex-col space-y-1 relative select-text ${className}`}
+      className={`font-mono text-[11px] md:text-xs text-text-secondary bg-card-bg border border-border-primary rounded-lg overflow-y-auto p-4 flex flex-col space-y-1 relative select-text ${className}`}
       style={{ maxHeight }}
     >
       <AnimatePresence initial={false}>

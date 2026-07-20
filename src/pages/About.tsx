@@ -56,7 +56,7 @@ export const About: React.FC = () => {
         />
       </Helmet>
       {/* 1. Header Hero with Blueprint Grid */}
-      <section className="bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
+      <section className="bg-section-dark bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
         <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75"></div>
         <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75"></div>
         <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75"></div>
@@ -85,7 +85,7 @@ export const About: React.FC = () => {
         {/* Biography Milestones - Left/Center Column */}
         <div className="lg:col-span-2 space-y-6">
           <SectionHeader title="Biographical Milestones" eyebrow="GET /bio" />
-          <div className="bg-bg-secondary/10 border border-border-primary/50 rounded-xl p-6">
+          <div className="bg-card-bg border border-border-primary rounded-xl p-6">
             <Timeline items={milestones} layout="vertical" />
           </div>
         </div>
@@ -124,7 +124,7 @@ export const About: React.FC = () => {
       {/* 3. Professional Experience */}
       <section className="space-y-6">
         <SectionHeader title="Professional Experience" eyebrow="GET /experience" />
-        <div className="border border-border-primary rounded-xl p-6 bg-bg-secondary/15 relative">
+        <div className="border border-border-primary rounded-xl p-6 bg-card-bg relative">
           <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75"></div>
           <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75"></div>
           <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75"></div>

@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Mail, ArrowRight } from "lucide-react";
-import profileImg from "../assets/profile.jpg";
 
 // Import custom components
 import { StatusBadge } from "../components/StatusBadge";
@@ -31,7 +30,6 @@ export const Gateway: React.FC = () => {
   const navigate = useNavigate();
   const [packetTrigger, setPacketTrigger] = useState(false);
   const [logs, setLogs] = useState<LogItem[]>([]);
-  const [imageError, setImageError] = useState(false);
 
   // Initialize logs on client mount to avoid ssr/diff timestamp mismatches
   useEffect(() => {
@@ -166,7 +164,7 @@ export const Gateway: React.FC = () => {
         <meta property="og:url" content="https://sanjai.dev/" />
       </Helmet>
       {/* 1. Hero Block with Grid Pattern */}
-      <section ref={heroSectionRef} className="bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8 min-h-[300px]">
+      <section ref={heroSectionRef} className="bg-section-light bg-blueprint-grid border border-white/[.10] rounded-xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8 min-h-[300px]">
         <div className="space-y-4 max-w-2xl text-left z-10">
           <div className="flex items-center space-x-2 select-none">
             <span className="font-mono text-[9px] md:text-[10px] font-bold text-status-success bg-status-success/5 border border-status-success/30 px-2 py-0.5 rounded uppercase tracking-wider">
@@ -200,33 +198,7 @@ export const Gateway: React.FC = () => {
           </div>
         </div>
 
-        {/* Right side Profile Photo */}
-        <div className="z-10 shrink-0 order-first md:order-last flex flex-col items-center md:self-stretch justify-center">
-          <div className="relative p-1 bg-card-bg/85 border border-border-primary hover:border-signature/40 hover:shadow-glow-hover rounded-xl transition-all duration-200 group flex flex-col h-full w-40 md:w-48">
-            {/* Corner Brackets */}
-            <div className="absolute -top-[1px] -left-[1px] w-2.5 h-2.5 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75"></div>
-            <div className="absolute -top-[1px] -right-[1px] w-2.5 h-2.5 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75"></div>
-            <div className="absolute -bottom-[1px] -left-[1px] w-2.5 h-2.5 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75"></div>
-            <div className="absolute -bottom-[1px] -right-[1px] w-2.5 h-2.5 border-b-2 border-r-2 border-signature rounded-br-xl opacity-75"></div>
 
-            {imageError ? (
-              <div className="flex flex-col items-center justify-center bg-bg-secondary/40 w-full flex-1 min-h-[160px] rounded-lg text-text-muted select-none border border-dashed border-border-primary/40">
-                <span className="font-mono text-[9px] uppercase tracking-wider">IMAGE_ASSET</span>
-                <span className="font-mono text-[9px] text-signature mt-1">profile.jpg</span>
-              </div>
-            ) : (
-              <img
-                src={profileImg}
-                alt="Sanjai L, headshot"
-                onError={() => setImageError(true)}
-                className="w-full flex-1 min-h-[160px] md:h-full object-cover rounded-lg brightness-75 transition-all duration-300 group-hover:brightness-90"
-              />
-            )}
-          </div>
-          <span className="font-mono text-[8px] text-text-muted uppercase tracking-wider mt-2 select-none">
-            [profile.jpg]
-          </span>
-        </div>
 
         {/* Floating animated request lines mapping */}
         <div className="absolute inset-0 pointer-events-none z-0">
@@ -240,7 +212,7 @@ export const Gateway: React.FC = () => {
       </section>
 
       {/* 2. System Capabilities Grid */}
-      <section className="space-y-6">
+      <section className="bg-section-dark rounded-xl p-6 space-y-6">
         <SectionHeader title="System Capabilities" eyebrow="GET /capabilities" badgeText="Healthy" />
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -248,14 +220,14 @@ export const Gateway: React.FC = () => {
             <div
               key={cap.name}
               onMouseEnter={() => handleCardHover(cap.name)}
-              className="relative bg-bg-secondary/40 border border-border-primary/50 hover:border-signature/40 hover:bg-card-bg/60 p-5 rounded-lg transition-all duration-200 group flex flex-col justify-between h-full min-h-[120px] hover:shadow-glow-hover"
+              className="relative bg-card-bg border border-border-primary hover:border-signature/40 hover:bg-card-hover p-5 rounded-lg transition-all duration-200 group flex flex-col justify-between h-full min-h-[120px] hover:shadow-glow-hover"
             >
               {/* Corner Brackets */}
               <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-border-primary/60 group-hover:border-signature transition-colors duration-200"></div>
               <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-border-primary/60 group-hover:border-signature transition-colors duration-200"></div>
               <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-border-primary/60 group-hover:border-signature transition-colors duration-200"></div>
               <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-border-primary/60 group-hover:border-signature transition-colors duration-200"></div>
-
+ 
               <div className="space-y-2">
                 <div className="flex justify-between items-center gap-2">
                   <h3 className="text-xs font-bold font-mono tracking-tight text-text-primary group-hover:text-signature transition-colors duration-150 uppercase">
@@ -270,7 +242,7 @@ export const Gateway: React.FC = () => {
             </div>
           ))}
         </div>
-
+ 
         <div className="flex flex-col items-center justify-center pt-4 space-y-1 select-none">
           <span className="font-mono text-[9px] text-text-muted uppercase tracking-widest">
             EXPLORE IMPLEMENTATIONS
@@ -286,11 +258,11 @@ export const Gateway: React.FC = () => {
           </button>
         </div>
       </section>
-
+ 
       {/* 3. Focus & System Logs Split */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Engineering Focus Box */}
-        <div className="border border-border-primary bg-bg-secondary/20 p-6 rounded-lg relative overflow-hidden flex flex-col justify-between">
+        <div className="border border-border-primary bg-card-bg p-6 rounded-lg relative overflow-hidden flex flex-col justify-between">
           <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-signature"></div>
           <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-signature"></div>
           <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-signature"></div>
@@ -305,7 +277,7 @@ export const Gateway: React.FC = () => {
             </div>
           </div>
         </div>
-
+ 
         {/* Simulated Telemetry Terminal Log */}
         <div className="flex flex-col h-[280px] lg:h-auto">
           <SectionHeader title="Telemetry Stream" eyebrow="STREAM" />
@@ -314,9 +286,9 @@ export const Gateway: React.FC = () => {
           </div>
         </div>
       </section>
-
+ 
       {/* 4. Connect Block */}
-      <section className="bg-bg-secondary/40 border border-border-primary rounded-lg p-6 relative">
+      <section className="bg-section-dark border border-border-primary rounded-lg p-6 relative">
         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-signature"></div>
         <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-signature"></div>
         

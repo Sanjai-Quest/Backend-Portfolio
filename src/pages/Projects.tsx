@@ -383,7 +383,7 @@ export const Projects: React.FC = () => {
       `}</style>
 
       {/* 1. Header Hero with Blueprint Grid */}
-      <section className="bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
+      <section className="bg-section-dark bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
         <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75"></div>
         <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75"></div>
         <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75"></div>
@@ -461,7 +461,7 @@ export const Projects: React.FC = () => {
 
       {/* 3. Detailed Inspection Panel */}
       <section className="space-y-4">
-        <div className="border border-border-primary rounded-xl p-6 md:p-8 bg-bg-secondary/15 relative text-left">
+        <div className="border border-border-primary rounded-xl p-6 md:p-8 bg-section-dark relative text-left">
           {/* Schematic brackets adjusted to wrap perfectly around rounded-xl border */}
           <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75"></div>
           <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75"></div>
@@ -524,7 +524,7 @@ export const Projects: React.FC = () => {
                       <Server className="w-3.5 h-3.5 text-status-async" />
                       <span>Cluster Service Architecture Diagram</span>
                     </h4>
-                    <div className="border border-border-primary/50 bg-bg-primary p-4 rounded-lg overflow-x-auto relative">
+                    <div className="border border-border-primary/50 bg-card-bg p-4 rounded-lg overflow-x-auto relative">
                       <div className="absolute top-2 left-3 font-mono text-[8px] text-text-muted uppercase select-none">
                         Schematic Visualization (Static SVG - Zero Bundle Weight)
                       </div>
@@ -550,7 +550,7 @@ export const Projects: React.FC = () => {
                     <Database className="w-3.5 h-3.5 text-status-mutation" />
                     <span>Container Metadata Specs</span>
                   </h4>
-                  <div className="text-[11px] font-mono space-y-2 bg-bg-primary border border-border-primary/40 p-4 rounded-lg text-text-muted">
+                  <div className="text-[11px] font-mono space-y-2 bg-card-bg border border-border-primary/40 p-4 rounded-lg text-text-muted">
                     {activeProject.specs.map((spec, idx) => (
                       <div key={idx} className="flex justify-between border-b border-border-primary/20 pb-1.5 last:border-b-0 last:pb-0">
                         <span className="uppercase">{spec.label}:</span>

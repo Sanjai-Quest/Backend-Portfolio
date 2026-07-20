@@ -199,7 +199,7 @@ export const Contact: React.FC = () => {
       </Helmet>
       
       {/* ── Page Hero ─────────────────────────────────────────────── */}
-      <section className="bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
+      <section className="bg-section-dark bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
         <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75" />
         <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75" />
         <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75" />
@@ -489,7 +489,7 @@ export const Contact: React.FC = () => {
           <SectionHeader title="Request Trace" eyebrow="LIVE PACKET" />
 
           {/* Animated POST packet visual */}
-          <div className="contact-anim-root border border-border-primary rounded-xl bg-bg-secondary/15 p-6 relative overflow-hidden min-h-[200px] flex flex-col justify-between">
+          <div className="contact-anim-root border border-border-primary rounded-xl bg-card-bg p-6 relative overflow-hidden min-h-[200px] flex flex-col justify-between">
             <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t-2 border-l-2 border-signature rounded-tl-xl opacity-75" />
             <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t-2 border-r-2 border-signature rounded-tr-xl opacity-75" />
             <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b-2 border-l-2 border-signature rounded-bl-xl opacity-75" />

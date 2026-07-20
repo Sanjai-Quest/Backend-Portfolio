@@ -677,7 +677,7 @@ export const Architecture: React.FC = () => {
         />
       </Helmet>
       {/* Page Header */}
-      <section className="bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
+      <section className="bg-section-dark bg-blueprint-grid border border-border-primary rounded-xl p-8 md:p-12 relative overflow-hidden text-left">
         <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-signature rounded-tl-[3px] opacity-75"></div>
         <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-signature rounded-tr-[3px] opacity-75"></div>
 
@@ -726,7 +726,7 @@ export const Architecture: React.FC = () => {
           })}
         </div>
 
-        <div className="border border-border-primary rounded-xl bg-bg-secondary/15 h-[360px] relative overflow-hidden">
+        <div className="border border-border-primary rounded-xl bg-card-bg h-[360px] relative overflow-hidden">
           <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase">
             Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
           </div>
@@ -745,12 +745,12 @@ export const Architecture: React.FC = () => {
             panOnScroll={false}
             panOnDrag={false}
           >
-            <Background color="#16213A" gap={16} size={1} />
+            <Background color="var(--color-bg-primary)" gap={16} size={1} />
             <Controls className="!bg-card-bg !border !border-border-primary !text-text-primary !shadow-none scale-75" />
           </ReactFlow>
         </div>
         
-        <div className="bg-bg-secondary/40 border border-border-primary/50 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
+        <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
           <strong>Translation:</strong> This diagram maps the microservice hosts configured across our cluster. {activeTab === "TRINETRA" ? "This topology remains high-level, outlining simple transactional ingestion and intelligence boundaries." : activeTab === "PLANWIZZ" ? "Shows PDF inputs running to the Spring API service, solved via CSP schedule constraints." : "Shows scanning jobs queueing asynchronously in RabbitMQ, with cache nodes buffering metadata queries."}
         </div>
       </section>
@@ -912,7 +912,7 @@ export const Architecture: React.FC = () => {
         </div>
 
         {/* Translation Caption */}
-        <div className="bg-bg-secondary/40 border border-border-primary/50 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
+        <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
           <strong>Translation:</strong> A cache miss means the data wasn't stored in memory yet, so the system had to fetch it from the database—that's the slow path you just saw. A cache hit means it was already stored in fast memory, returning the response instantly.
         </div>
       </section>
@@ -966,7 +966,7 @@ export const Architecture: React.FC = () => {
           </div>
 
           {/* Broadcast Visual Representation with 3 Partition lanes & DLQ Topic */}
-          <div className="lg:col-span-2 border border-border-primary rounded-xl p-6 bg-bg-secondary/15 relative overflow-hidden flex flex-col justify-center min-h-[280px]">
+          <div className="lg:col-span-2 border border-border-primary rounded-xl p-6 bg-card-bg relative overflow-hidden flex flex-col justify-center min-h-[280px]">
             <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none">
               KAFKA TOPIC DISPATCH: ORDER_CREATED
             </div>
@@ -1025,7 +1025,7 @@ export const Architecture: React.FC = () => {
                           className={`border p-2 rounded flex flex-col items-center justify-between font-mono text-[9px] relative transition-all duration-200 ${
                             isActive
                               ? "border-status-info bg-status-info/5"
-                              : "border-border-primary/50 bg-bg-secondary/40"
+                              : "border-border-primary/50 bg-bg-primary/20"
                           }`}
                         >
                           <div className="flex justify-between w-full select-none">
@@ -1178,7 +1178,7 @@ export const Architecture: React.FC = () => {
           </div>
 
           {/* Interactive exchange-queue graph visual */}
-          <div className="lg:col-span-2 border border-border-primary rounded-xl p-6 bg-bg-secondary/15 relative overflow-hidden flex flex-col justify-center min-h-[280px]">
+          <div className="lg:col-span-2 border border-border-primary rounded-xl p-6 bg-card-bg relative overflow-hidden flex flex-col justify-center min-h-[280px]">
             <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none">
               RABBITMQ ROUTING GRAPH: EXCHANGE FAN-OUT
             </div>
@@ -1265,7 +1265,7 @@ export const Architecture: React.FC = () => {
                       className={`border p-2 rounded flex flex-col items-center justify-between font-mono text-[9px] relative transition-all duration-200 ${
                         rabbitActiveNode === "QUEUES" || (rabbitActiveNode === "WORKERS" && rabbitTasks[0]?.stage === "PROCESSING")
                           ? "border-status-info bg-status-info/5"
-                          : "border-border-primary/50 bg-bg-secondary/40"
+                          : "border-border-primary/50 bg-bg-primary/20"
                       }`}
                     >
                       <div className="flex justify-between w-full select-none items-center">
@@ -1297,7 +1297,7 @@ export const Architecture: React.FC = () => {
                       className={`border p-2 rounded flex flex-col items-center justify-between font-mono text-[9px] relative transition-all duration-200 ${
                         rabbitActiveNode === "QUEUES" || (rabbitActiveNode === "WORKERS" && rabbitTasks[0]?.stage === "PROCESSING")
                           ? "border-status-info bg-status-info/5"
-                          : "border-border-primary/50 bg-bg-secondary/40"
+                          : "border-border-primary/50 bg-bg-primary/20"
                       }`}
                     >
                       <div className="flex justify-between w-full select-none items-center">
@@ -1427,13 +1427,13 @@ export const Architecture: React.FC = () => {
         </div>
 
         {/* Translation Caption */}
-        <div className="bg-bg-secondary/40 border border-border-primary/50 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
+        <div className="bg-card-bg border border-border-primary/40 p-4 rounded-lg text-xs text-text-muted leading-relaxed font-mono select-none">
           <strong>Translation:</strong> An exchange decides which queue a message goes to. When a worker can't process a message even after retrying, it goes to a dead-letter queue instead of vanishing — so nothing gets silently lost.
         </div>
       </section>
 
       {/* Observability disclaimer */}
-      <section className="bg-bg-secondary/40 border border-border-primary rounded-lg p-6 relative">
+      <section className="bg-section-dark border border-border-primary rounded-lg p-6 relative">
         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-signature"></div>
         <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-signature"></div>
 

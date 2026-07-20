@@ -45,7 +45,7 @@ export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       </a>
 
       {/* 1. Header (Height: 72px) */}
-      <header className="h-[72px] shrink-0 border-b border-border-primary bg-bg-secondary px-4 md:px-6 flex items-center justify-between">
+      <header className="h-[72px] shrink-0 border-b border-white/[.06] bg-chrome-bg px-4 md:px-6 flex items-center justify-between">
         
         {/* Logo and metadata */}
         <div className="flex items-center space-x-4">
@@ -85,8 +85,8 @@ export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 aria-current={isActive ? "page" : undefined}
                 className={`relative group px-2 md:px-3 py-2 rounded font-mono text-xs transition-all flex items-center space-x-1 md:space-x-1.5 border min-h-[44px] min-w-[44px] justify-center md:justify-start ${
                   isActive 
-                    ? "bg-bg-primary text-status-info border-border-primary" 
-                    : "text-text-secondary border-transparent hover:text-text-primary hover:bg-card-bg"
+                    ? "bg-bg-primary text-status-info border-white/[.12]" 
+                    : "text-text-secondary border-transparent hover:text-text-primary hover:bg-bg-primary/80"
                 }`}
               >
                 <span className={`hidden md:inline ${isActive ? "text-status-info" : "text-text-muted group-hover:text-text-secondary"}`}>
