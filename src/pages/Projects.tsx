@@ -11,7 +11,7 @@ const DevSecWatchDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId
   <svg
     width="100%"
     height="100%"
-    viewBox="0 0 600 320"
+    viewBox="0 0 600 340"
     role="img"
     aria-describedby={descriptionId}
     className="max-w-[600px] mx-auto text-text-primary"
@@ -22,66 +22,85 @@ const DevSecWatchDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId
       </marker>
     </defs>
     
-    {/* Vite Client */}
-    <rect x="20" y="140" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="70" y="160" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">VITE CLIENT</text>
-    <text x="70" y="172" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Browser UI</text>
+    {/* Tier 1: Client */}
+    <rect x="240" y="15" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="300" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">VITE CLIENT</text>
+    <text x="300" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Browser UI</text>
 
-    {/* Connection: Client <-> Gateway */}
-    <path d="M 120 160 L 160 160" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    {/* Tier 2: Gateway */}
+    <rect x="240" y="75" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">GATEWAY API</text>
+    <text x="300" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot:8080</text>
 
-    {/* Gateway API */}
-    <rect x="160" y="140" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
-    <text x="210" y="158" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">GATEWAY API</text>
-    <text x="210" y="170" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot:8080</text>
+    {/* Tier 3: Data & Messaging */}
+    <rect x="60" y="135" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="120" y="153" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">REDIS 7</text>
+    <text x="120" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Cache:6379</text>
 
-    {/* Connection: Gateway -> RabbitMQ */}
-    <path d="M 260 160 L 300 160" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <rect x="240" y="135" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="300" y="153" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">POSTGRESQL 15</text>
+    <text x="300" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Database:5433</text>
 
-    {/* RabbitMQ */}
-    <rect x="300" y="140" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
-    <text x="350" y="158" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">RABBITMQ 3</text>
-    <text x="350" y="170" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Broker:5672</text>
+    <rect x="420" y="135" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
+    <text x="480" y="153" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">RABBITMQ 3</text>
+    <text x="480" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Broker:5672</text>
 
-    {/* Connection: RabbitMQ -> Worker */}
-    <path d="M 400 160 L 440 160" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 4: Processing */}
+    <rect x="420" y="205" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
+    <text x="480" y="223" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">WORKER SERVICE</text>
+    <text x="480" y="235" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot:8081</text>
 
-    {/* Worker Service */}
-    <rect x="440" y="140" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
-    <text x="500" y="158" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">WORKER SERVICE</text>
-    <text x="500" y="170" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot:8081</text>
+    {/* Tier 5: Integration */}
+    <rect x="240" y="265" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
+    <text x="300" y="283" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">AI SERVICE</text>
+    <text x="300" y="295" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">FastAPI:8000</text>
 
-    {/* Connection: Worker -> AI Service */}
-    <path d="M 500 140 L 500 80" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* External Integration (Tier 5 external target) */}
+    <rect x="60" y="265" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="3,3" />
+    <text x="120" y="288" textAnchor="middle" fill="#7B8FA6" fontSize="9" fontFamily="monospace" fontWeight="bold">GROQ / OSV API</text>
 
-    {/* AI Service */}
-    <rect x="450" y="40" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
-    <text x="500" y="58" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">AI SERVICE</text>
-    <text x="500" y="70" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">FastAPI:8000</text>
+    {/* Orthogonal Connections (Zero Crossovers) */}
+    {/* Client -> Gateway (Sync Call) */}
+    <path d="M 300 55 V 75" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    
+    {/* Gateway -> Cache (Sync Call) */}
+    <path d="M 240 95 H 120 V 135" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    
+    {/* Gateway -> DB (Sync Call) */}
+    <path d="M 300 115 V 135" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    
+    {/* Gateway -> Broker (Async Publish) */}
+    <path d="M 360 95 H 480 V 135" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Connection: AI Service -> Groq LLM / OSV */}
-    <path d="M 500 40 L 500 15" stroke="#22C55E" strokeWidth="1" strokeDasharray="3,3" markerEnd="url(#arrow)" />
-    <text x="505" y="25" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Groq/OSV</text>
+    {/* Broker -> Worker (Async Consume) */}
+    <path d="M 480 175 V 205" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Redis Cache */}
-    <rect x="160" y="240" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="210" y="258" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">REDIS 7</text>
-    <text x="210" y="270" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Cache:6379</text>
+    {/* Worker -> DB (Sync SQL) */}
+    <path d="M 420 220 H 300 V 175" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Connection: Gateway <-> Redis */}
-    <path d="M 210 180 L 210 240" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
-    {/* Connection: Worker -> Redis */}
-    <path d="M 450 180 L 260 250" stroke="#7B8FA6" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" />
+    {/* Worker -> Cache (Sync Query - routed below DB to prevent crossovers) */}
+    <path d="M 480 245 V 255 H 120 V 175" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* PostgreSQL */}
-    <rect x="300" y="240" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="350" y="258" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">POSTGRESQL 15</text>
-    <text x="350" y="270" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Database:5433</text>
+    {/* Worker -> AI Service (Sync API Call) */}
+    <path d="M 420 225 H 380 V 285 H 360" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Connection: Gateway <-> PostgreSQL */}
-    <path d="M 240 180 L 305 240" stroke="#21304F" strokeWidth="1.2" strokeDasharray="2,2" />
-    {/* Connection: Worker <-> PostgreSQL */}
-    <path d="M 470 180 L 395 240" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    {/* AI Service -> External API (Third-party Dotted Call) */}
+    <path d="M 240 285 H 180" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" markerEnd="url(#arrow)" />
+
+    {/* Legend */}
+    <g transform="translate(15, 322)" font-family="monospace" font-size="7" fill="#7B8FA6">
+      <line x1="0" y1="3" x2="20" y2="3" stroke="#7B8FA6" strokeWidth="1.2" />
+      <text x="25" y="6">solid = sync call</text>
+      
+      <line x1="120" y1="3" x2="140" y2="3" stroke="#FF7A45" strokeWidth="1.2" />
+      <text x="145" y="6">orange = async publish</text>
+
+      <line x1="260" y1="3" x2="280" y2="3" stroke="#5B95F8" strokeWidth="1.2" />
+      <text x="285" y="6">blue = async consume</text>
+      
+      <line x1="390" y1="3" x2="410" y2="3" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" />
+      <text x="415" y="6">dashed = external API</text>
+    </g>
   </svg>
 );
 
@@ -90,10 +109,10 @@ const TriNetraDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
   <svg
     width="100%"
     height="100%"
-    viewBox="0 0 620 340"
+    viewBox="0 0 600 380"
     role="img"
     aria-describedby={descriptionId}
-    className="max-w-[620px] mx-auto text-text-primary"
+    className="max-w-[600px] mx-auto text-text-primary"
   >
     <defs>
       <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -101,74 +120,188 @@ const TriNetraDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
       </marker>
     </defs>
 
-    {/* Customer Portal */}
-    <rect x="15" y="150" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="65" y="170" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">PORTAL</text>
-    <text x="65" y="182" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Claim Input</text>
+    {/* Tier 1: Client */}
+    <rect x="240" y="15" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="300" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">CUSTOMER PORTAL</text>
+    <text x="300" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Web / App Claim Input</text>
 
-    {/* Connection: Portal -> Return API */}
-    <path d="M 115 170 L 145 170" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 2: Entry & Compliance */}
+    <rect x="240" y="75" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">RETURN API</text>
+    <text x="300" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot Entry</text>
 
-    {/* Return API */}
-    <rect x="145" y="150" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
-    <text x="195" y="168" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">RETURN API</text>
-    <text x="195" y="180" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot</text>
+    <rect x="420" y="75" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#EF4444" strokeWidth="1.5" />
+    <text x="480" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">DPDPA ENGINE</text>
+    <text x="480" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Consent &amp; Audit</text>
 
-    {/* Connection: Return API -> Redpanda */}
-    <path d="M 245 170 L 275 170" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 3: Broker */}
+    <rect x="240" y="135" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
+    <text x="300" y="153" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">REDPANDA BROKER</text>
+    <text x="300" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Kafka Broker</text>
 
-    {/* Redpanda Broker */}
-    <rect x="275" y="150" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
-    <text x="325" y="168" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">REDPANDA (KAFKA)</text>
-    <text x="325" y="180" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Event Broker</text>
+    {/* Tier 4: Processing Services */}
+    <rect x="60" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
+    <text x="120" y="213" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">FASTAPI FRAUD ENG</text>
+    <text x="120" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">6 Detectors (phash, ela)</text>
 
-    {/* Connection: Redpanda -> Fraud Engine */}
-    <path d="M 375 170 L 405 90" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    {/* Connection: Redpanda -> Graph Service */}
-    <path d="M 375 170 L 405 170" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    {/* Connection: Redpanda -> Celery */}
-    <path d="M 375 170 L 405 250" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <rect x="240" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
+    <text x="300" y="213" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">GRAPH SERVICE</text>
+    <text x="300" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">NetworkX Ring Check</text>
 
-    {/* Fraud Engine */}
-    <rect x="405" y="70" width="115" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
-    <text x="462" y="88" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">FASTAPI FRAUD ENG</text>
-    <text x="462" y="100" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">6 Detectors (OCR, pHash)</text>
+    <rect x="420" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#A6B0BF" strokeWidth="1.5" />
+    <text x="480" y="213" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">CELERY WORKERS</text>
+    <text x="480" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Parallel Task Pipeline</text>
 
-    {/* Graph Service */}
-    <rect x="405" y="150" width="115" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
-    <text x="462" y="168" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">GRAPH SERVICE</text>
-    <text x="462" y="180" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">NetworkX Ring Check</text>
+    {/* Tier 5: Scoring */}
+    <rect x="240" y="255" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="273" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">SCORE ENGINE</text>
+    <text x="300" y="285" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">0-100 Risk Tier</text>
 
-    {/* Celery Workers */}
-    <rect x="405" y="230" width="115" height="40" rx="4" fill="#0B0F1A" stroke="#A6B0BF" strokeWidth="1.5" />
-    <text x="462" y="248" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">CELERY WORKERS</text>
-    <text x="462" y="260" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Media &amp; Carrier Ingest</text>
+    {/* Tier 6: UI Console */}
+    <rect x="240" y="315" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="300" y="333" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">D3.JS CONSOLE</text>
+    <text x="300" y="345" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Risk Viz Dashboard</text>
 
-    {/* Connection: Fraud Engine -> Score Engine */}
-    <path d="M 520 90 L 550 150" stroke="#22C55E" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    {/* Connection: Graph Service -> Score Engine */}
-    <path d="M 520 170 L 540 170" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Orthogonal Connectors (Zero Crossovers) */}
+    {/* Tier 1 Client -> Tier 2 Entry */}
+    <path d="M 300 55 V 75" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    
+    {/* Tier 2 Entry <-> Tier 2 Compliance (Dashed DPDPA Link) */}
+    <path d="M 360 95 H 420" stroke="#EF4444" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
 
-    {/* Score Engine */}
-    <rect x="540" y="150" width="70" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
-    <text x="575" y="170" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">SCORE ENG</text>
-    <text x="575" y="182" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">0-100 Tier</text>
+    {/* Tier 2 Entry -> Tier 3 Broker (Async Event Publish) */}
+    <path d="M 300 115 V 135" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Connection: Score Engine -> Admin Dashboard */}
-    <path d="M 575 190 L 575 230" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 3 Broker -> Tier 4 Processing (Async Event Ingestion) */}
+    <path d="M 240 155 H 120 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 175 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 360 155 H 480 V 195" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Admin Dashboard */}
-    <rect x="535" y="230" width="80" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="575" y="248" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">D3.JS CONSOLE</text>
-    <text x="575" y="260" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Risk Viz</text>
+    {/* Tier 4 Processing -> Tier 5 Scoring */}
+    <path d="M 120 235 V 275 H 240" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 235 V 255" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 480 235 V 275 H 360" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* DPDPA Compliance */}
-    <rect x="145" y="50" width="100" height="40" rx="4" fill="#0B0F1A" stroke="#EF4444" strokeWidth="1.5" />
-    <text x="195" y="68" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">DPDPA ENGINE</text>
-    <text x="195" y="80" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Audit &amp; Consent</text>
+    {/* Tier 5 Scoring -> Tier 6 UI Console */}
+    <path d="M 300 295 V 315" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Connection: Return API <-> DPDPA */}
-    <path d="M 195 90 L 195 150" stroke="#7B8FA6" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    {/* Legend */}
+    <g transform="translate(15, 362)" font-family="monospace" font-size="7" fill="#7B8FA6">
+      <line x1="0" y1="3" x2="20" y2="3" stroke="#7B8FA6" strokeWidth="1.2" />
+      <text x="25" y="6">solid = sync call</text>
+      
+      <line x1="120" y1="3" x2="140" y2="3" stroke="#FF7A45" strokeWidth="1.2" />
+      <text x="145" y="6">orange = flow trigger</text>
+
+      <line x1="260" y1="3" x2="280" y2="3" stroke="#5B95F8" strokeWidth="1.2" />
+      <text x="285" y="6">blue = event ingest</text>
+      
+      <line x1="390" y1="3" x2="410" y2="3" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" />
+      <text x="415" y="6">dashed = compliance check</text>
+    </g>
+  </svg>
+);
+
+// Static SVG component for PlanWizz Architecture Diagram
+const PlanWizzDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId }) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 600 240"
+    role="img"
+    aria-describedby={descriptionId}
+    className="max-w-[600px] mx-auto text-text-primary"
+  >
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#7B8FA6" />
+      </marker>
+    </defs>
+
+    {/* Tier 1: Client */}
+    <rect x="240" y="15" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="300" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">REACT FRONTEND</text>
+    <text x="300" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Schedule Planner UI</text>
+
+    {/* Tier 2: Core API */}
+    <rect x="240" y="85" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="103" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">SPRING BOOT API</text>
+    <text x="300" y="115" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">planwizz-core</text>
+
+    {/* Tier 3: Ingestion & Engine Solvers */}
+    <rect x="100" y="155" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
+    <text x="160" y="173" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">PDF PARSER</text>
+    <text x="160" y="185" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Data Ingest Node</text>
+
+    <rect x="380" y="155" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
+    <text x="440" y="173" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">CSP ENGINE</text>
+    <text x="440" y="185" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Constraint Solver</text>
+
+    {/* Orthogonal Connectors */}
+    {/* Tier 1 -> Tier 2 */}
+    <path d="M 300 55 V 85" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    
+    {/* Tier 2 -> Tier 3 */}
+    <path d="M 240 105 H 160 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 360 105 H 440 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+
+    {/* Legend */}
+    <g transform="translate(15, 222)" font-family="monospace" font-size="7" fill="#7B8FA6">
+      <line x1="0" y1="3" x2="20" y2="3" stroke="#7B8FA6" strokeWidth="1.2" />
+      <text x="25" y="6">solid = sync call</text>
+      
+      <line x1="120" y1="3" x2="140" y2="3" stroke="#FF7A45" strokeWidth="1.2" />
+      <text x="145" y="6">orange = solver delegate</text>
+    </g>
+  </svg>
+);
+
+// Static SVG component for DunesDay Architecture Diagram
+const DunesDayDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId }) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 600 240"
+    role="img"
+    aria-describedby={descriptionId}
+    className="max-w-[600px] mx-auto text-text-primary"
+  >
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#7B8FA6" />
+      </marker>
+    </defs>
+
+    {/* Tier 1: Client */}
+    <rect x="240" y="15" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="300" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">REACT SPA</text>
+    <text x="300" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Tweaks &amp; Predictor UI</text>
+
+    {/* Tier 2: API Entry */}
+    <rect x="240" y="85" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="103" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">FASTAPI API</text>
+    <text x="300" y="115" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">dunesday-service</text>
+
+    {/* Tier 3: Model and Explainer */}
+    <rect x="240" y="155" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
+    <text x="300" y="173" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">XGBOOST MODEL</text>
+    <text x="300" y="185" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">SHAP Explainable AI</text>
+
+    {/* Connectors */}
+    {/* Tier 1 -> Tier 2 */}
+    <path d="M 300 55 V 85" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    
+    {/* Tier 2 -> Tier 3 */}
+    <path d="M 300 125 V 155" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+
+    {/* Legend */}
+    <g transform="translate(15, 222)" font-family="monospace" font-size="7" fill="#7B8FA6">
+      <line x1="0" y1="3" x2="20" y2="3" stroke="#7B8FA6" strokeWidth="1.2" />
+      <text x="25" y="6">solid = sync call</text>
+      
+      <line x1="120" y1="3" x2="140" y2="3" stroke="#FF7A45" strokeWidth="1.2" />
+      <text x="145" y="6">orange = model query</text>
+    </g>
   </svg>
 );
 
@@ -277,7 +410,8 @@ export const Projects: React.FC = () => {
       description: "A full-stack AI application to predict movie box office performance (Opening Weekend and Total Gross) and compare two movies side by side.",
       tech: ["XGBoost", "FastAPI", "React", "SHAP", "Recharts"],
       highlights: dunesdayHighlights,
-      hasDiagram: false,
+      hasDiagram: true,
+      altText: "Architecture diagram of DunesDay. A React Frontend (UI) communicates via REST with a FastAPI Backend, which runs prediction requests through an XGBoost model and calculates SHAP explainability values.",
       specs: [
         { label: "INTELLIGENCE_MODEL", value: "XGBoost (Scikit-Learn)" },
         { label: "EXPLAINABILITY", value: "SHAP Feature Analysis" },
@@ -314,7 +448,8 @@ export const Projects: React.FC = () => {
       description: "An intelligent timetable generation platform that transforms raw university enrollment PDFs into optimized, clash-free academic schedules.",
       tech: ["Spring Boot", "Java", "React", "Tailwind CSS", "PDF Processing", "CSP Algorithms"],
       highlights: planwizzHighlights,
-      hasDiagram: false,
+      hasDiagram: true,
+      altText: "Architecture diagram of PlanWizz. A React Frontend (UI) communicates via REST with a Spring Boot API core, which routes solving constraints to a CSP engine and parses raw documents with a PDF Parser.",
       specs: [
         { label: "PRIMARY_DATABASE", value: "In-Memory Store" },
         { label: "ARCHITECTURE", value: "Monolith Architecture" },
@@ -531,11 +666,19 @@ export const Projects: React.FC = () => {
                       <div className="pt-3">
                         {activeProject.id === "devsecwatch" ? (
                           <DevSecWatchDiagram descriptionId="ds-desc" />
-                        ) : (
+                        ) : activeProject.id === "trinetra" ? (
                           <TriNetraDiagram descriptionId="tn-desc" />
+                        ) : activeProject.id === "planwizz" ? (
+                          <PlanWizzDiagram descriptionId="pw-desc" />
+                        ) : (
+                          <DunesDayDiagram descriptionId="dd-desc" />
                         )}
                       </div>
-                      <div id={activeProject.id === "devsecwatch" ? "ds-desc" : "tn-desc"} className="sr-only">
+                      <div id={
+                        activeProject.id === "devsecwatch" ? "ds-desc" :
+                        activeProject.id === "trinetra" ? "tn-desc" :
+                        activeProject.id === "planwizz" ? "pw-desc" : "dd-desc"
+                      } className="sr-only">
                         {activeProject.altText}
                       </div>
                     </div>
