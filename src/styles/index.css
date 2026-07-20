@@ -3,33 +3,47 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand/Theme color scale - Charcoal & Champagne */
-  --color-bg-primary: #141414;
-  --color-bg-secondary: #1C1C1C;
-  --color-card-bg: #1C1C1C;
-  --color-card-hover: #262626;
-  --color-border-primary: #2E2E2E;
-  
+  /* Brand/Theme color scale — Architect's Workspace (sage + charcoal) */
+  --color-bg-primary: #AEB8AF;        /* body canvas — light sage, NOT dark anymore */
+  --color-bg-secondary: #B8C2BA;      /* alternating section background, subtle variation */
+  --color-chrome-bg: #0D0F10;         /* NEW — navbar/footer, the darkest element */
+  --color-card-bg: #15181A;           /* card/panel surface, floats above the sage canvas */
+  --color-card-hover: #1C2022;        /* slightly lighter than card-bg, same direction as before */
+  --color-modal-bg: #181A1C;          /* NEW — modals, distinct near-black from cards */
+  --color-border-primary: #2C3134;    /* dark border — use on the light canvas */
+  --color-border-light: rgba(255,255,255,0.08); /* NEW — subtle border for use INSIDE dark panels */
+
   /* Schematic signature accents */
-  --color-signature: #C9A66B;
-  --color-grid: #1F1F1F;
-  --shadow-glow-accent: 0 0 15px rgba(201, 166, 107, 0.25);
-  --shadow-glow-hover: 0 0 20px rgba(201, 166, 107, 0.35);
-  
-  /* Text color scale */
-  --color-text-primary: #F0EEE6;
-  --color-text-secondary: #A8A49A;
-  --color-text-muted: #8A867C;
-  
-  /* Signal-color set mapped to HTTP status semantics */
-  --color-status-success: #3BA07C;    /* 2xx OK - adjusted for contrast */
-  --color-status-info: #C9A66B;       /* 1xx / 3xx Metadata - champagne accent */
-  --color-status-warning: #C57E35;    /* Warning / Slow / Outage - adjusted for contrast and distinguishability */
-  --color-status-mutation: #B0A295;   /* Mutation / POST/PUT - adjusted for contrast */
-  --color-status-async: #9E8CBF;      /* Purple for Messaging Queue - adjusted for contrast */
-  --color-status-error: #E05B5B;      /* 5xx Error - adjusted for contrast */
-  
-  /* Fonts */
+  --color-signature: #6F8F76;         /* was champagne #C9A66B — now sage green */
+  --color-signature-hover: #84A28A;   /* NEW */
+  --color-grid: rgba(13, 15, 16, 0.04); /* was solid #1F1F1F for a dark bg — now a translucent
+                                            dark tint so the blueprint grid stays <5% opacity
+                                            against the LIGHT canvas instead of vanishing/inverting */
+  --shadow-elevation: 0 4px 14px rgba(13, 15, 16, 0.18);       /* replaces glow-accent */
+  --shadow-elevation-hover: 0 8px 22px rgba(13, 15, 16, 0.24); /* replaces glow-hover */
+
+  /* Text — these are for use INSIDE dark panels (card/chrome/modal), not on the bare body */
+  --color-text-primary: #F5F5F3;
+  --color-text-secondary: #C3C7C5;
+  --color-text-muted: #8A918D;
+
+  /* NEW — for text that sits directly on the light body/section background */
+  --color-text-on-light: #15181A;
+  --color-text-on-light-muted: #4A4F52;
+
+  /* Signal-color set — only the 3 the new spec actually defined (success/warning/error)
+     get updated to spec values. Mutation and async weren't in the new spec at all —
+     I've kept them muted/desaturated to match the "never vibrant" instruction rather
+     than leaving the old saturated values in; adjust these two if you want something
+     more deliberate, they're my best guess at matching the new restraint. */
+  --color-status-success: #3C9A5F;
+  --color-status-info: #6F8F76;       /* now just equals the accent, same pattern as before */
+  --color-status-warning: #C18C3B;
+  --color-status-mutation: #9B9186;   /* muted warm gray, was more saturated tan before */
+  --color-status-async: #8A7FA0;      /* muted violet-gray, was more saturated purple before */
+  --color-status-error: #B84A4A;
+
+  /* Fonts — unchanged, already correctly on the typography patch's values */
   --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
   --font-serif: 'Fraunces', Georgia, serif;
@@ -38,19 +52,18 @@
 @layer base {
   body {
     background-color: var(--color-bg-primary);
-    color: var(--color-text-primary);
+    color: var(--color-text-on-light);   /* changed from --color-text-primary — see note above */
     font-family: var(--font-sans);
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   code, pre {
     font-family: var(--font-mono);
   }
 
-  /* Custom global scrollbars for WebKit browsers */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -66,7 +79,6 @@
     background: var(--color-signature);
   }
 
-  /* Standard scrollbars for Firefox */
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--color-border-primary) var(--color-bg-primary);
