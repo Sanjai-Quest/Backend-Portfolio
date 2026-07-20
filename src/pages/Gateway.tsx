@@ -176,7 +176,7 @@ export const Gateway: React.FC = () => {
               GET / (gateway_health_check)
             </span>
           </div>
-          <h1 className="font-mono text-xl md:text-3xl font-bold tracking-tight text-text-primary uppercase leading-tight">
+          <h1 className="font-serif text-xl md:text-3xl font-bold tracking-tight text-text-primary uppercase leading-tight">
             Sanjai L — System Architect
           </h1>
           <p className="text-text-secondary text-sm md:text-base leading-relaxed font-sans max-w-xl">

@@ -524,7 +524,7 @@ export const Projects: React.FC = () => {
                       <Server className="w-3.5 h-3.5 text-status-async" />
                       <span>Cluster Service Architecture Diagram</span>
                     </h4>
-                    <div className="border border-border-primary/50 bg-[#05080c] p-4 rounded-lg overflow-x-auto relative">
+                    <div className="border border-border-primary/50 bg-bg-primary p-4 rounded-lg overflow-x-auto relative">
                       <div className="absolute top-2 left-3 font-mono text-[8px] text-text-muted uppercase select-none">
                         Schematic Visualization (Static SVG - Zero Bundle Weight)
                       </div>
@@ -550,7 +550,7 @@ export const Projects: React.FC = () => {
                     <Database className="w-3.5 h-3.5 text-status-mutation" />
                     <span>Container Metadata Specs</span>
                   </h4>
-                  <div className="text-[11px] font-mono space-y-2 bg-[#05080c] border border-border-primary/40 p-4 rounded-lg text-text-muted">
+                  <div className="text-[11px] font-mono space-y-2 bg-bg-primary border border-border-primary/40 p-4 rounded-lg text-text-muted">
                     {activeProject.specs.map((spec, idx) => (
                       <div key={idx} className="flex justify-between border-b border-border-primary/20 pb-1.5 last:border-b-0 last:pb-0">
                         <span className="uppercase">{spec.label}:</span>
