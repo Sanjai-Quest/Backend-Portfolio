@@ -48,51 +48,30 @@ const TopologyMapPanel: React.FC<{
   activeNodes: Node[];
   activeEdges: Edge[];
 }> = ({ activeTab, activeNodes, activeEdges }) => {
-  const { setNodes, fitView } = useReactFlow();
+  const { setNodes } = useReactFlow();
   const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Clear selection on tab switch
   useEffect(() => {
     setSelectedNode(null);
   }, [activeTab]);
 
-  // Fit viewport dynamically based on actual rendered container bounds during transitions and resizing
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new ResizeObserver(() => {
-      window.requestAnimationFrame(() => {
-        fitView({ padding: 0.15, includeHiddenNodes: true });
-      });
-    });
-
-    observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [fitView, activeTab, activeNodes]);
-
   return (
-    <div
-      ref={containerRef}
-      className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
+    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
         TRINETRA:    "h-[680px]",
         RUNTIME:     "h-[440px]",
         DEVSECWATCH: "h-[440px]",
         PLANWIZZ:    "h-[360px]",
         DUNESDAY:    "h-[360px]",
-      }[activeTab]}`}
-    >
+      }[activeTab]}`}>
       <div className="flex-1 relative h-full">
         <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
           Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
         </div>
         <ReactFlow
           key={activeTab}
-          nodes={activeNodes}
-          edges={activeEdges}
+          defaultNodes={activeNodes}
+          defaultEdges={activeEdges}
           nodeTypes={nodeTypes}
           onSelectionChange={({ nodes }) => {
             if (nodes.length > 0) {
