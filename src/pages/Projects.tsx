@@ -109,7 +109,7 @@ const TriNetraDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
   <svg
     width="100%"
     height="100%"
-    viewBox="0 0 600 380"
+    viewBox="0 0 600 520"
     role="img"
     aria-describedby={descriptionId}
     className="max-w-[600px] mx-auto text-text-primary"
@@ -121,84 +121,94 @@ const TriNetraDiagram: React.FC<{ descriptionId: string }> = ({ descriptionId })
     </defs>
 
     {/* Tier 1: Client */}
-    <rect x="240" y="15" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
-    <text x="300" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">CUSTOMER PORTAL</text>
-    <text x="300" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Web / App Claim Input</text>
+    <rect x="50" y="15" width="130" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="115" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">CUSTOMER PORTAL</text>
+    <text x="115" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Claims Intake UI</text>
 
-    {/* Tier 2: Entry & Compliance */}
-    <rect x="240" y="75" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
-    <text x="300" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">RETURN API</text>
-    <text x="300" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Spring Boot Entry</text>
+    <rect x="420" y="15" width="130" height="40" rx="4" fill="#0B0F1A" stroke="#7B8FA6" strokeWidth="1.5" />
+    <text x="485" y="35" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">ADMIN DASHBOARD</text>
+    <text x="485" y="47" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">D3.js Risk Console</text>
 
-    <rect x="420" y="75" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#EF4444" strokeWidth="1.5" />
-    <text x="480" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">DPDPA ENGINE</text>
-    <text x="480" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Consent &amp; Audit</text>
+    {/* Tier 2: Gateway */}
+    <rect x="230" y="75" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="93" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">API GATEWAY (TRAEFIK)</text>
+    <text x="300" y="105" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Edge Routing Proxy</text>
 
-    {/* Tier 3: Broker */}
-    <rect x="240" y="135" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
-    <text x="300" y="153" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">REDPANDA BROKER</text>
-    <text x="300" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Kafka Broker</text>
+    {/* Tier 3: Services */}
+    <rect x="40" y="135" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="110" y="153" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">RETURN API</text>
+    <text x="110" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Spring Boot State Machine</text>
 
-    {/* Tier 4: Processing Services */}
-    <rect x="60" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
-    <text x="120" y="213" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">FASTAPI FRAUD ENG</text>
-    <text x="120" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">6 Detectors (phash, ela)</text>
+    <rect x="230" y="135" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#22C55E" strokeWidth="1.5" />
+    <text x="300" y="153" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">FRAUD ENGINE</text>
+    <text x="300" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">FastAPI / 6 Detectors</text>
 
-    <rect x="240" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
-    <text x="300" y="213" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">GRAPH SERVICE</text>
-    <text x="300" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">NetworkX Ring Check</text>
+    <rect x="420" y="135" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#9D74F7" strokeWidth="1.5" />
+    <text x="490" y="153" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">GRAPH SERVICE</text>
+    <text x="490" y="165" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">FastAPI / NetworkX Ring Check</text>
 
-    <rect x="420" y="195" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#A6B0BF" strokeWidth="1.5" />
-    <text x="480" y="213" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">CELERY WORKERS</text>
-    <text x="480" y="225" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Parallel Task Pipeline</text>
+    {/* Tier 4: Event Backbone */}
+    <rect x="220" y="215" width="160" height="40" rx="4" fill="#0B0F1A" stroke="#5B95F8" strokeWidth="1.5" />
+    <text x="300" y="233" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">EVENT STREAM (REDPANDA)</text>
+    <text x="300" y="245" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Kafka-Compatible Broker</text>
 
-    {/* Tier 5: Scoring */}
-    <rect x="240" y="255" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
-    <text x="300" y="273" textAnchor="middle" fill="#F5F7FA" fontSize="9" fontFamily="monospace" fontWeight="bold">SCORE ENGINE</text>
-    <text x="300" y="285" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">0-100 Risk Tier</text>
+    {/* Tier 5: Grouped Workers Node (Celery parallel) */}
+    <rect x="150" y="295" width="300" height="50" rx="4" fill="#0B0F1A" stroke="#A6B0BF" strokeWidth="1.5" />
+    <text x="300" y="312" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">5 FRAUD-DETECTION WORKERS (CELERY)</text>
+    <text x="300" y="324" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Parallel Tasks: Image · Receipt · Carrier · Behavioral · Graph</text>
+    <text x="300" y="334" textAnchor="middle" fill="#A6B0BF" fontSize="6" fontFamily="monospace">Concurrent Async Ingestion Pipelines</text>
 
-    {/* Tier 6: UI Console */}
-    <rect x="240" y="315" width="120" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
-    <text x="300" y="333" textAnchor="middle" fill="#A6B0BF" fontSize="9" fontFamily="monospace" fontWeight="bold">D3.JS CONSOLE</text>
-    <text x="300" y="345" textAnchor="middle" fill="#7B8FA6" fontSize="7" fontFamily="monospace">Risk Viz Dashboard</text>
+    {/* Tier 6: Aggregation */}
+    <rect x="230" y="375" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#FF7A45" strokeWidth="1.5" />
+    <text x="300" y="393" textAnchor="middle" fill="#F5F7FA" fontSize="8" fontFamily="monospace" fontWeight="bold">SCORE AGGREGATOR</text>
+    <text x="300" y="405" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">0 - 100 Risk Engine</text>
 
-    {/* Orthogonal Connectors (Zero Crossovers) */}
-    {/* Tier 1 Client -> Tier 2 Entry */}
-    <path d="M 300 55 V 75" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    
-    {/* Tier 2 Entry <-> Tier 2 Compliance (Dashed DPDPA Link) */}
-    <path d="M 360 95 H 420" fill="none" stroke="#EF4444" strokeWidth="1.2" strokeDasharray="2,2" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
+    {/* Tier 7: Data */}
+    <rect x="110" y="445" width="160" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="190" y="463" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">REDIS (RESULTS)</text>
+    <text x="190" y="475" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Temporary Cache store:6379</text>
 
-    {/* Tier 2 Entry -> Tier 3 Broker (Async Event Publish) */}
+    <rect x="330" y="445" width="160" height="40" rx="4" fill="#0B0F1A" stroke="#21304F" strokeWidth="1.5" />
+    <text x="410" y="463" textAnchor="middle" fill="#A6B0BF" fontSize="8" fontFamily="monospace" fontWeight="bold">POSTGRESQL (PERSISTENT)</text>
+    <text x="410" y="475" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Immutable Audit Logs:5433</text>
+
+    {/* Side Annotation: Observability */}
+    <rect x="420" y="215" width="140" height="40" rx="4" fill="#0B0F1A" stroke="#EF4444" strokeWidth="1.2" strokeDasharray="3,3" />
+    <text x="490" y="233" textAnchor="middle" fill="#EF4444" fontSize="7" fontFamily="monospace" fontWeight="bold">PROMETHEUS + GRAFANA</text>
+    <text x="490" y="245" textAnchor="middle" fill="#7B8FA6" fontSize="6" fontFamily="monospace">Observability Badge</text>
+
+    {/* Connections */}
+    {/* Tier 1 -> Tier 2 */}
+    <path d="M 115 55 V 65 H 300 V 75" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 485 55 V 65 H 300 V 75" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+
+    {/* Tier 2 -> Tier 3 */}
+    <path d="M 300 115 V 125 H 110 V 135" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
     <path d="M 300 115 V 135" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 115 V 125 H 490 V 135" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Tier 3 Broker -> Tier 4 Processing (Async Event Ingestion) */}
-    <path d="M 240 155 H 120 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 300 175 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 360 155 H 480 V 195" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 3 -> Tier 4 (Converging Bus Pattern) */}
+    <path d="M 110 175 V 195 H 300" fill="none" stroke="#7B8FA6" strokeWidth="1.2" />
+    <path d="M 300 175 V 215" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 490 175 V 195 H 300" fill="none" stroke="#7B8FA6" strokeWidth="1.2" />
 
-    {/* Tier 4 Processing -> Tier 5 Scoring */}
-    <path d="M 120 235 V 275 H 240" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 300 235 V 255" fill="none" stroke="#9D74F7" strokeWidth="1.2" markerEnd="url(#arrow)" />
-    <path d="M 480 235 V 275 H 360" fill="none" stroke="#7B8FA6" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 4 -> Tier 5 */}
+    <path d="M 300 255 V 295" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Tier 5 Scoring -> Tier 6 UI Console */}
-    <path d="M 300 295 V 315" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    {/* Tier 5 -> Tier 6 */}
+    <path d="M 300 345 V 375" fill="none" stroke="#5B95F8" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-    {/* Legend */}
-    <g transform="translate(15, 362)" font-family="monospace" font-size="7" fill="#7B8FA6">
-      <line x1="0" y1="3" x2="20" y2="3" stroke="#7B8FA6" strokeWidth="1.2" />
-      <text x="25" y="6">solid = sync call</text>
-      
-      <line x1="120" y1="3" x2="140" y2="3" stroke="#FF7A45" strokeWidth="1.2" />
-      <text x="145" y="6">orange = flow trigger</text>
+    {/* Tier 6 -> Tier 7 */}
+    <path d="M 300 415 V 430 H 190 V 445" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
+    <path d="M 300 415 V 430 H 410 V 445" fill="none" stroke="#FF7A45" strokeWidth="1.2" markerEnd="url(#arrow)" />
 
-      <line x1="260" y1="3" x2="280" y2="3" stroke="#5B95F8" strokeWidth="1.2" />
-      <text x="285" y="6">blue = event ingest</text>
-      
-      <line x1="390" y1="3" x2="410" y2="3" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" />
-      <text x="415" y="6">dashed = compliance check</text>
-    </g>
+    {/* Observability Dashed Path */}
+    <path d="M 420 235 H 380" fill="none" stroke="#EF4444" strokeWidth="1" strokeDasharray="3,3" />
+
+    {/* Plain English Caption */}
+    <text x="300" y="505" textAnchor="middle" fill="#7B8FA6" fontSize="7.5" fontFamily="sans-serif" fontStyle="italic">
+      A return claim triggers five fraud checks running at the same time — on the photo, receipt, carrier record, customer history, and account links. Results combine into one risk score.
+    </text>
   </svg>
 );
 
