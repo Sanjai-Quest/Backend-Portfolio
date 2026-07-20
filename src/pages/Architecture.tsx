@@ -1184,9 +1184,9 @@ export const Architecture: React.FC = () => {
         </div>
 
         <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
-            TRINETRA:    "h-[560px]",
-            RUNTIME:     "h-[380px]",
-            DEVSECWATCH: "h-[380px]",
+            TRINETRA:    "h-[680px]",
+            RUNTIME:     "h-[440px]",
+            DEVSECWATCH: "h-[440px]",
             PLANWIZZ:    "h-[360px]",
             DUNESDAY:    "h-[360px]",
           }[activeTab]}`}>
@@ -1207,17 +1207,17 @@ export const Architecture: React.FC = () => {
                 }
               }}
               fitView
-              fitViewOptions={{ padding: activeTab === "TRINETRA" ? 0.08 : 0.15 }}
+              fitViewOptions={{ padding: 0.15 }}
               minZoom={0.2}
               maxZoom={1.5}
               preventScrolling={false}
               nodesDraggable={false}
               nodesConnectable={false}
               zoomOnScroll={false}
-              zoomOnDoubleClick={true}
-              zoomOnPinch={true}
+              zoomOnDoubleClick={false}
+              zoomOnPinch={false}
               panOnScroll={false}
-              panOnDrag={true}
+              panOnDrag={false}
             >
               <Background color="var(--color-bg-primary)" gap={16} size={1} />
             </ReactFlow>
