@@ -51,6 +51,7 @@ const TopologyMapPanel: React.FC<{
   const [nodes, setNodes, onNodesChange] = useNodesState(activeNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(activeEdges);
   const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
   const nodesInitialized = useNodesInitialized();
   type FitViewOptions = { padding?: number };
   type FlowInstance = { fitView: (opts?: FitViewOptions) => void };
@@ -87,7 +88,29 @@ const TopologyMapPanel: React.FC<{
   return (
     <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 h-[420px] md:h-[600px]`}>
       <div className="flex-1 relative h-full">
-        <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
+        <div
+          className="relative h-full"
+          style={{
+            transform: selectedNode && selectedNode.data?.details ? "translateX(-72px)" : undefined,
+            transition: "transform 200ms ease",
+          }}
+        >
+        <div className="absolute top-2 left-3 z-10 flex items-start gap-2">
+          <button
+            onClick={() => setShowInfo((s) => !s)}
+            className="font-mono text-[9px] text-signature/90 uppercase select-none bg-signature/5 hover:bg-signature/10 border border-signature/10 px-2 py-0.5 rounded-md cursor-pointer"
+            aria-expanded={showInfo}
+            aria-controls="architecture-info"
+          >
+            Click me to know about more
+          </button>
+          {showInfo && (
+            <div id="architecture-info" className="ml-2 bg-bg-primary border border-border-primary text-[11px] p-2 rounded shadow-md max-w-xs">
+              This panel shows topology diagrams for different projects. Click nodes to reveal details on the right.
+            </div>
+          )}
+        </div>
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 font-mono text-[9px] text-text-muted select-none uppercase z-10">
           Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
         </div>
         <ReactFlow
@@ -134,7 +157,7 @@ const TopologyMapPanel: React.FC<{
 
       {/* Right-hand detailed sidebar popover */}
       {selectedNode && selectedNode.data?.details && (
-        <div className="w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono relative select-text overflow-y-auto">
+        <div className="absolute right-0 top-0 w-72 border-l border-signature/30 bg-bg-primary h-full p-5 z-50 flex flex-col gap-4 text-left font-mono select-text overflow-y-auto">
           {/* Header */}
           <div className="flex items-start justify-between border-b border-border-primary pb-3 gap-2">
             <span className="font-bold text-xs text-signature uppercase tracking-wider leading-tight">
@@ -166,6 +189,7 @@ const TopologyMapPanel: React.FC<{
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
