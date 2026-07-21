@@ -9,6 +9,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { Footer } from "../components/Footer";
+import { EndpointChip } from "../components/EndpointChip";
 
 // Define our endpoints mapping for nav and layout
 const ROUTES_MAP = [
@@ -73,7 +74,7 @@ export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         </div>
 
         {/* Navigation - HTTP Request Lines */}
-        <nav aria-label="Main navigation" className="flex space-x-0.5 md:space-x-1">
+        <nav aria-label="Main navigation" className="flex flex-wrap justify-end gap-0.5 md:gap-1">
           {ROUTES_MAP.map((route) => {
             const isActive = location.pathname === route.path;
             return (
@@ -83,24 +84,27 @@ export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 title={`View ${route.name} page (routes via ${route.method} method to ${route.service})`}
                 aria-label={`View ${route.name} page`}
                 aria-current={isActive ? "page" : undefined}
-                className={`relative group px-2 md:px-3 py-2 rounded font-mono text-xs transition-all flex items-center space-x-1 md:space-x-1.5 border min-h-[44px] min-w-[44px] justify-center md:justify-start ${
-                  isActive 
-                    ? "bg-bg-primary text-status-info border-white/[.12]" 
-                    : "text-text-secondary border-transparent hover:text-text-primary hover:bg-bg-primary/80"
-                }`}
+                className="contents"
               >
-                <span className={`hidden md:inline ${isActive ? "text-status-info" : "text-text-muted group-hover:text-text-secondary"}`}>
-                  {route.method}
-                </span>
-                <span className="hidden md:inline">{route.path}</span>
-                {/* Mobile: show name only */}
-                <span className="md:hidden text-[10px]">{route.name}</span>
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-status-info rounded-full" aria-hidden="true"></span>
-                )}
+                <EndpointChip
+                  method={route.method}
+                  path={route.path}
+                  label={route.name}
+                  isActive={isActive}
+                />
               </Link>
             );
           })}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Download resume, opens PDF in new tab"
+            title="Download resume PDF"
+            className="contents"
+          >
+            <EndpointChip method="GET" path="/resume.pdf" label="Resume" />
+          </a>
         </nav>
       </header>
 

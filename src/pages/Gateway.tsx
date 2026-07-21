@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Mail, ArrowRight } from "lucide-react";
+import { Mail, ArrowRight, Download } from "lucide-react";
+import { Button } from "../components/Button";
 
 // Import custom components
 import { StatusBadge } from "../components/StatusBadge";
@@ -181,6 +182,16 @@ export const Gateway: React.FC = () => {
             An engineer whose portfolio behaves like a system, drawn the way that system's own architecture diagrams would be drawn.
           </p>
           <div className="pt-2 flex flex-wrap gap-3">
+            <Button
+              type="button"
+              variant="primary"
+              icon={Download}
+              className="h-10 px-4"
+              aria-label="Download resume, opens PDF in new tab"
+              onClick={() => window.open("/resume.pdf", "_blank", "noopener,noreferrer")}
+            >
+              Download Resume
+            </Button>
             <div
               ref={sourceRef}
               onClick={handleSendPacket}

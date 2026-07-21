@@ -5,7 +5,8 @@ import { SectionHeader } from "../components/SectionHeader";
 import { Timeline } from "../components/Timeline";
 import type { TimelineItem } from "../components/Timeline";
 import { TechBadge } from "../components/TechBadge";
-import { BookOpen, ShieldAlert } from "lucide-react";
+import { BookOpen, ShieldAlert, Download } from "lucide-react";
+import { Button } from "../components/Button";
 
 export const About: React.FC = () => {
   // Timeline milestones representing developer journey
@@ -77,6 +78,18 @@ export const About: React.FC = () => {
           <p className="text-text-muted text-xs font-mono max-w-xl">
             RESOLVING SYSTEM OWNER INFORMATION: SANJAI L
           </p>
+          <div className="pt-2">
+            <Button
+              type="button"
+              variant="primary"
+              icon={Download}
+              className="h-10 px-4"
+              aria-label="Download resume, opens PDF in new tab"
+              onClick={() => window.open("/resume.pdf", "_blank", "noopener,noreferrer")}
+            >
+              Download Resume
+            </Button>
+          </div>
         </div>
       </section>
 
