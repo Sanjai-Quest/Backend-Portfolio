@@ -56,6 +56,43 @@ const TopologyMapPanel: React.FC<{
   type FitViewOptions = { padding?: number };
   type FlowInstance = { fitView: (opts?: FitViewOptions) => void };
   const flowInstanceRef = useRef<FlowInstance | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Ensure fitView runs only when the container has a stable, non-zero size.
+  const scheduleFit = () => {
+    const instance = flowInstanceRef.current;
+    const container = containerRef.current;
+    if (!instance || !container) return;
+
+    const runFit = () => {
+      try {
+        instance.fitView({ padding: 0.15 });
+      } catch {
+        // ignore
+      }
+    };
+
+    const { clientWidth, clientHeight } = container;
+    if (clientWidth > 0 && clientHeight > 0) {
+      // Use two RAFs to ensure layout is settled
+      requestAnimationFrame(() => requestAnimationFrame(runFit));
+      return;
+    }
+
+    // If size is zero, wait for ResizeObserver to fire once with a usable size
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const cr = entry.contentRect;
+        if (cr.width > 0 && cr.height > 0) {
+          ro.disconnect();
+          // schedule via RAFs to let layout finalize
+          requestAnimationFrame(() => requestAnimationFrame(runFit));
+          return;
+        }
+      }
+    });
+    ro.observe(container);
+  };
 
   // Sync props to state on tab switch or data changes
   useEffect(() => {
@@ -73,20 +110,12 @@ const TopologyMapPanel: React.FC<{
   // always runs after the container size is stable.
   useEffect(() => {
     if (nodesInitialized && flowInstanceRef.current) {
-      const timer = setTimeout(() => {
-        try {
-          flowInstanceRef.current?.fitView({ padding: 0.15 });
-        } catch {
-          // swallow errors during unmount
-        }
-      }, 50);
-      return () => clearTimeout(timer);
+      scheduleFit();
     }
-    return;
   }, [nodesInitialized, activeTab]);
 
   return (
-    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 h-[420px] md:h-[600px]`}>
+    <div ref={containerRef} className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 h-[420px] md:h-[600px]`}>
       <div className="flex-1 relative h-full">
         <div
           className="relative h-full"
