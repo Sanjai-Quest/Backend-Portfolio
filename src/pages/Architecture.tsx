@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { ReactFlow, Background, ReactFlowProvider, useReactFlow, useNodesState, useEdgesState, useNodesInitialized, type Node, type Edge } from "@xyflow/react";
+import { ReactFlow, Background, ReactFlowProvider, useNodesState, useEdgesState, useNodesInitialized, type Node, type Edge } from "@xyflow/react";
 import { useReducedMotion } from "framer-motion";
 import { Database, Server, Send, Layers, AlertTriangle } from "lucide-react";
 
@@ -52,7 +52,9 @@ const TopologyMapPanel: React.FC<{
   const [edges, setEdges, onEdgesChange] = useEdgesState(activeEdges);
   const [selectedNode, setSelectedNode] = useState<CustomTopologyNode | null>(null);
   const nodesInitialized = useNodesInitialized();
-  const { fitView } = useReactFlow();
+  type FitViewOptions = { padding?: number };
+  type FlowInstance = { fitView: (opts?: FitViewOptions) => void };
+  const flowInstanceRef = useRef<FlowInstance | null>(null);
 
   // Sync props to state on tab switch or data changes
   useEffect(() => {
@@ -66,23 +68,24 @@ const TopologyMapPanel: React.FC<{
   }, [activeTab]);
 
   // Execute fitView only after React Flow measures custom node dimensions
+  // Use the `onInit` instance and guard with `nodesInitialized` so fitView
+  // always runs after the container size is stable.
   useEffect(() => {
-    if (nodesInitialized) {
+    if (nodesInitialized && flowInstanceRef.current) {
       const timer = setTimeout(() => {
-        fitView({ padding: 0.15 });
+        try {
+          flowInstanceRef.current?.fitView({ padding: 0.15 });
+        } catch {
+          // swallow errors during unmount
+        }
       }, 50);
       return () => clearTimeout(timer);
     }
-  }, [nodesInitialized, fitView, activeTab]);
+    return;
+  }, [nodesInitialized, activeTab]);
 
   return (
-    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 ${{
-        TRINETRA:    "h-[600px]",
-        RUNTIME:     "h-[420px]",
-        DEVSECWATCH: "h-[420px]",
-        PLANWIZZ:    "h-[340px]",
-        DUNESDAY:    "h-[340px]",
-      }[activeTab]}`}>
+    <div className={`border border-border-primary rounded-xl bg-card-bg relative overflow-hidden flex flex-row transition-all duration-300 h-[420px] md:h-[600px]`}>
       <div className="flex-1 relative h-full">
         <div className="absolute top-2 left-3 font-mono text-[9px] text-text-muted select-none uppercase z-10">
           Topology Map: {activeTab === "RUNTIME" ? "Self System Container" : `${activeTab.toLowerCase()}.internal`}
@@ -101,8 +104,19 @@ const TopologyMapPanel: React.FC<{
               setSelectedNode(null);
             }
           }}
-          fitView
-          fitViewOptions={{ padding: 0.15 }}
+          onInit={(instance) => {
+            flowInstanceRef.current = instance;
+            // If nodes are already initialized, trigger fitView once the instance is ready
+              if (nodesInitialized) {
+                setTimeout(() => {
+                  try {
+                    instance.fitView({ padding: 0.15 });
+                  } catch {
+                    // ignore
+                  }
+                }, 50);
+              }
+          }}
           minZoom={0.2}
           maxZoom={1.0}
           preventScrolling={false}
