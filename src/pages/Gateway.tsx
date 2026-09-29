@@ -186,7 +186,7 @@ export const Gateway: React.FC = () => {
               type="button"
               variant="primary"
               icon={Download}
-              className="h-10 px-4"
+              className="h-10 px-4 btn-resume !bg-[#213827] hover:!bg-[#172b1c] !text-[#FCFCFB] hover:!text-white shadow-sm border border-[#2e4d36]"
               aria-label="Download resume, opens PDF in new tab"
               onClick={() => window.open("/resume.pdf", "_blank", "noopener,noreferrer")}
             >

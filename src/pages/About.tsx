@@ -5,8 +5,7 @@ import { SectionHeader } from "../components/SectionHeader";
 import { Timeline } from "../components/Timeline";
 import type { TimelineItem } from "../components/Timeline";
 import { TechBadge } from "../components/TechBadge";
-import { BookOpen, ShieldAlert, Download } from "lucide-react";
-import { Button } from "../components/Button";
+import { BookOpen, ShieldAlert } from "lucide-react";
 
 export const About: React.FC = () => {
   // Timeline milestones representing developer journey
@@ -36,6 +35,28 @@ export const About: React.FC = () => {
         tech: ["Kafka", "FastAPI", "NetworkX", "Celery", "DPDPA Compliance"],
         image: "/bio/trinetra-winner.jpg",
         imageAlt: "Sanjai holding the 2nd place runner-up certificate at Saveetha Engineering College's HackHustle 2.0 Hackathon",
+      },
+      {
+        date: "SEPTEMBER 2026",
+        title: "Drestein prompt.sprint.launch",
+        subtitle: "Drestein 2026 · Best Event — prompt.sprint.launch",
+        description:
+          "Organized and led an AI-assisted product-building event where participants transformed a problem statement into a working web/app solution within a 4-hour sprint. Coordinated PRD, TRD, BRD, UI/UX, and customer-document workflows while managing the event execution and participant experience.",
+        image: "/self_pic_1.jfif",
+        imageAlt: "Sanjai holding the Best Event Trophy for Drestein prompt.sprint.launch",
+        award: {
+          badge: "AWARD",
+          title: "Best Event — prompt.sprint.launch",
+          department: "Saveetha Engineering College",
+          event: "Drestein 2026",
+        },
+        tech: [
+          "AI-Assisted Development",
+          "Product Design",
+          "Event Coordination",
+          "PRD/TRD/BRD",
+          "UI/UX",
+        ],
       },
       {
         date: "2026",
@@ -78,18 +99,6 @@ export const About: React.FC = () => {
           <p className="text-text-muted text-xs font-mono max-w-xl">
             RESOLVING SYSTEM OWNER INFORMATION: SANJAI L
           </p>
-          <div className="pt-2">
-            <Button
-              type="button"
-              variant="primary"
-              icon={Download}
-              className="h-10 px-4"
-              aria-label="Download resume, opens PDF in new tab"
-              onClick={() => window.open("/resume.pdf", "_blank", "noopener,noreferrer")}
-            >
-              Download Resume
-            </Button>
-          </div>
         </div>
       </section>
 

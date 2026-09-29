@@ -129,6 +129,28 @@
     border: 1px solid rgba(46, 76, 51, 0.25);
   }
 
+  /* High contrast styling for primary action buttons inside light surfaces and resume button */
+  .bg-section-light button.bg-status-info,
+  .bg-section-light button.bg-status-info span,
+  .bg-section-light button.bg-status-info svg,
+  .btn-resume,
+  .btn-resume span,
+  .btn-resume svg {
+    color: #FCFCFB !important;
+    stroke: #FCFCFB !important;
+  }
+
+  .bg-section-light button.bg-status-info:hover,
+  .bg-section-light button.bg-status-info:hover span,
+  .bg-section-light button.bg-status-info:hover svg,
+  .btn-resume:hover,
+  .btn-resume:hover span,
+  .btn-resume:hover svg {
+    background-color: #1a2c1f !important;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+  }
+
   code,
   pre {
     font-family: var(--font-mono);
